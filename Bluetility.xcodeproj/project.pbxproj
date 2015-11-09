@@ -1,0 +1,288 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		3749318B1BF169C90087E39F /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3749318A1BF169C90087E39F /* AppDelegate.swift */; };
+		3749318D1BF169C90087E39F /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3749318C1BF169C90087E39F /* ViewController.swift */; };
+		3749318F1BF169C90087E39F /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 3749318E1BF169C90087E39F /* Assets.xcassets */; };
+		374931921BF169C90087E39F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 374931901BF169C90087E39F /* Main.storyboard */; };
+		3749319A1BF16D980087E39F /* BluetilityWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374931991BF16D980087E39F /* BluetilityWindowController.swift */; };
+		3749319C1BF173470087E39F /* Scanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3749319B1BF173470087E39F /* Scanner.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		374931871BF169C90087E39F /* Bluetility.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Bluetility.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		3749318A1BF169C90087E39F /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		3749318C1BF169C90087E39F /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		3749318E1BF169C90087E39F /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		374931911BF169C90087E39F /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		374931931BF169C90087E39F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		374931991BF16D980087E39F /* BluetilityWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetilityWindowController.swift; sourceTree = "<group>"; };
+		3749319B1BF173470087E39F /* Scanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scanner.swift; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		374931841BF169C90087E39F /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		3749317E1BF169C90087E39F = {
+			isa = PBXGroup;
+			children = (
+				374931891BF169C90087E39F /* Bluetility */,
+				374931881BF169C90087E39F /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		374931881BF169C90087E39F /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				374931871BF169C90087E39F /* Bluetility.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		374931891BF169C90087E39F /* Bluetility */ = {
+			isa = PBXGroup;
+			children = (
+				3749318A1BF169C90087E39F /* AppDelegate.swift */,
+				374931991BF16D980087E39F /* BluetilityWindowController.swift */,
+				3749319B1BF173470087E39F /* Scanner.swift */,
+				3749318C1BF169C90087E39F /* ViewController.swift */,
+				3749318E1BF169C90087E39F /* Assets.xcassets */,
+				374931901BF169C90087E39F /* Main.storyboard */,
+				374931931BF169C90087E39F /* Info.plist */,
+			);
+			path = Bluetility;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		374931861BF169C90087E39F /* Bluetility */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 374931961BF169C90087E39F /* Build configuration list for PBXNativeTarget "Bluetility" */;
+			buildPhases = (
+				374931831BF169C90087E39F /* Sources */,
+				374931841BF169C90087E39F /* Frameworks */,
+				374931851BF169C90087E39F /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = Bluetility;
+			productName = Bluetility;
+			productReference = 374931871BF169C90087E39F /* Bluetility.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		3749317F1BF169C90087E39F /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0710;
+				LastUpgradeCheck = 0710;
+				ORGANIZATIONNAME = "Joseph Ross";
+				TargetAttributes = {
+					374931861BF169C90087E39F = {
+						CreatedOnToolsVersion = 7.1;
+					};
+				};
+			};
+			buildConfigurationList = 374931821BF169C90087E39F /* Build configuration list for PBXProject "Bluetility" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 3749317E1BF169C90087E39F;
+			productRefGroup = 374931881BF169C90087E39F /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				374931861BF169C90087E39F /* Bluetility */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		374931851BF169C90087E39F /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3749318F1BF169C90087E39F /* Assets.xcassets in Resources */,
+				374931921BF169C90087E39F /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		374931831BF169C90087E39F /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				3749319A1BF16D980087E39F /* BluetilityWindowController.swift in Sources */,
+				3749318D1BF169C90087E39F /* ViewController.swift in Sources */,
+				3749319C1BF173470087E39F /* Scanner.swift in Sources */,
+				3749318B1BF169C90087E39F /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		374931901BF169C90087E39F /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				374931911BF169C90087E39F /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		374931941BF169C90087E39F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = macosx;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+			};
+			name = Debug;
+		};
+		374931951BF169C90087E39F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "-";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = macosx;
+			};
+			name = Release;
+		};
+		374931971BF169C90087E39F /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Bluetility/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rossible.Bluetility;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		374931981BF169C90087E39F /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				COMBINE_HIDPI_IMAGES = YES;
+				INFOPLIST_FILE = Bluetility/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.rossible.Bluetility;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		374931821BF169C90087E39F /* Build configuration list for PBXProject "Bluetility" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				374931941BF169C90087E39F /* Debug */,
+				374931951BF169C90087E39F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		374931961BF169C90087E39F /* Build configuration list for PBXNativeTarget "Bluetility" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				374931971BF169C90087E39F /* Debug */,
+				374931981BF169C90087E39F /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 3749317F1BF169C90087E39F /* Project object */;
+}

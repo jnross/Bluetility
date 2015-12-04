@@ -53,6 +53,11 @@ class ViewController: NSViewController {
         
     }
     
+    override func viewDidLayout() {
+        super.viewDidLayout()
+        setupCharacteristicControls()
+    }
+    
     override func viewDidAppear() {
         super.viewDidAppear()
     }
@@ -90,6 +95,10 @@ extension ViewController : NSBrowserDelegate {
         case 3: return 4
         default: return 0
         }
+    }
+    
+    func browser(browser: NSBrowser, sizeToFitWidthOfColumn columnIndex: Int) -> CGFloat {
+        return browser.widthOfColumn(columnIndex)
     }
     
     func browser(sender: NSBrowser, willDisplayCell cell: AnyObject, atRow row: Int, column: Int) {
@@ -132,8 +141,10 @@ extension ViewController : NSBrowserDelegate {
     }
     
     func browser(browser: NSBrowser, shouldSizeColumn columnIndex: Int, forUserResize: Bool, toWidth suggestedWidth: CGFloat) -> CGFloat {
-        if columnIndex == 0 && !forUserResize {
-            return 200
+        if !forUserResize {
+            if columnIndex == 0 {
+                return 200
+            }
         }
         return suggestedWidth
     }
@@ -175,12 +186,25 @@ extension ViewController : NSBrowserDelegate {
                     
                 }
                 refreshCharacteristicDetail()
-                setupCharacteristicControls()
             }
         }
+        setupCharacteristicControls()
     }
     
     func setupCharacteristicControls() {
+        
+        let frameWidth = view.frame.size.width
+        var otherWidth = browser.widthOfColumn(0)
+        otherWidth += browser.widthOfColumn(1)
+        otherWidth += browser.widthOfColumn(2)
+        
+        let fitWidth = max(frameWidth - otherWidth - 6, 100)
+        browser.setWidth(fitWidth, ofColumn: 3)
+        
+        readButton.removeFromSuperview()
+        subscribeButton.removeFromSuperview()
+        writeAscii.removeFromSuperview()
+        writeHex.removeFromSuperview()
         if let characteristic = selectedCharacteristic {
             let frame = browser.frameOfColumn(3)
             if characteristic.properties.contains(.Read) {

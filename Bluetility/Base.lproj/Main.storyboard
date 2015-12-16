@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9060"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="9531"/>
     </dependencies>
     <scenes>
         <!--Application-->
@@ -245,7 +245,6 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="900" height="350"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <value key="minSize" type="size" width="480" height="270"/>
                         <toolbar key="toolbar" implicitIdentifier="533C158D-7680-47F3-990F-C93EB5726D4D" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="Apq-FO-k1s">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="40F96AE3-F3F8-449C-AC48-175219A4BF4E" label="Refresh" paletteLabel="Refresh" tag="-1" image="NSRefreshTemplate" id="kSv-rP-wzc">
@@ -258,7 +257,10 @@
                                 <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="pCM-dq-JKL"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="lwf-vr-SwG"/>
                                 <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="3rr-ib-C5l"/>
-                                <toolbarItem implicitItemIdentifier="99DC67F5-2835-41E7-9030-F79FD68264F8" label="" paletteLabel="" tag="-1" id="uCq-Za-ArI"/>
+                                <toolbarItem implicitItemIdentifier="99DC67F5-2835-41E7-9030-F79FD68264F8" label="" paletteLabel="" tag="-1" id="uCq-Za-ArI">
+                                    <size key="minSize" width="150" height="0.0"/>
+                                    <size key="maxSize" width="150" height="0.0"/>
+                                </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="660AAC15-A283-4910-BA13-9D6F5BC92C9B" label="Sort" paletteLabel="Sort" tag="-1" id="kSU-oa-g28"/>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
@@ -285,9 +287,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <browser verticalHuggingPriority="750" misplaced="YES" allowsExpansionToolTips="YES" enabled="YES" hasHorizontalScroller="YES" allowsEmptySelection="YES" defaultColumnWidth="280" minColumnWidth="100" maxVisibleColumns="4" titled="YES" separatesColumns="YES" allowsTypeSelect="YES" columnResizingType="user" translatesAutoresizingMaskIntoConstraints="NO" id="kaT-gA-YGL">
+                            <browser verticalHuggingPriority="750" misplaced="YES" allowsExpansionToolTips="YES" enabled="YES" hasHorizontalScroller="YES" allowsEmptySelection="YES" defaultColumnWidth="280" minColumnWidth="100" maxVisibleColumns="4" titled="YES" separatesColumns="YES" allowsTypeSelect="YES" columnResizingType="user" translatesAutoresizingMaskIntoConstraints="NO" id="kaT-gA-YGL" customClass="PasteboardBrowser" customModule="Bluetility" customModuleProvider="target">
                                 <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
-                                <animations/>
                                 <connections>
                                     <action selector="browserAction:" target="XfG-lQ-9wD" id="r6B-Mu-1fT"/>
                                     <outlet property="delegate" destination="XfG-lQ-9wD" id="P1s-MW-ZXD"/>
@@ -300,7 +301,6 @@
                             <constraint firstItem="kaT-gA-YGL" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="20" id="efx-bD-KdS"/>
                             <constraint firstAttribute="trailing" secondItem="kaT-gA-YGL" secondAttribute="trailing" id="fb7-Vm-Nk0"/>
                         </constraints>
-                        <animations/>
                     </view>
                     <connections>
                         <outlet property="browser" destination="kaT-gA-YGL" id="ij5-hq-Nz3"/>
@@ -314,7 +314,6 @@
                 <button verticalHuggingPriority="750" id="e59-Mo-I3N">
                     <rect key="frame" x="0.0" y="0.0" width="90" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <animations/>
                     <buttonCell key="cell" type="push" title="Subscribe" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WwL-A1-e6e">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
@@ -326,7 +325,6 @@
                 <textField verticalHuggingPriority="750" id="ZXU-Fy-j1z">
                     <rect key="frame" x="0.0" y="0.0" width="96" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="ASCII" drawsBackground="YES" id="j1z-Fr-ZPx">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -339,7 +337,6 @@
                 <textField verticalHuggingPriority="750" id="Wwy-M1-tko">
                     <rect key="frame" x="0.0" y="0.0" width="96" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <animations/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Write Hex" drawsBackground="YES" id="zYc-o7-b4q">
                         <font key="font" metaFont="system"/>
                         <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
@@ -352,7 +349,6 @@
                 <button verticalHuggingPriority="750" id="fqL-z9-hpC">
                     <rect key="frame" x="0.0" y="0.0" width="82" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <animations/>
                     <buttonCell key="cell" type="push" title="Read" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dgx-ob-XKS">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>

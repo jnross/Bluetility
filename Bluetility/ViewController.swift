@@ -26,6 +26,8 @@ class ViewController: NSViewController {
     @IBOutlet var readButton:NSButton!
     @IBOutlet var subscribeButton:NSButton!
     
+    var statusLabel:NSTextView = NSTextView()
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -45,11 +47,15 @@ class ViewController: NSViewController {
         refreshItem?.target = self
         let sortItem = self.view.window?.toolbar?.items[1]
         sortItem?.action = Selector("sortPressed:")
-        let statusItem = self.view.window?.toolbar?.items[3]
-        let label = NSTextView()
-        label.string = "Hello"
-        statusItem?.view?.addSubview(label)
-        label.frame = CGRectMake(0,0, 50, 20)
+        if let statusItem = self.view.window?.toolbar?.items[3] {
+            statusLabel.editable = false
+            statusLabel.backgroundColor = NSColor.clearColor()
+            statusItem.view = statusLabel
+            var size = statusItem.maxSize
+            size.width = 150
+            statusItem.maxSize = size
+            statusLabel.frame = CGRectMake(0,0, size.width, size.height)
+        }
         
     }
     
@@ -169,6 +175,9 @@ extension ViewController : NSBrowserDelegate {
         browser.setTitle(self.browser(browser,titleOfColumn:column)!, ofColumn: column)
         if indexPath.length == 1 {
             let peripheral = scanner.devices[indexPath.indexAtPosition(0)]
+            if peripheral != connectedPeripheral {
+                statusLabel.string = ""
+            }
             selectPeripheral(peripheral)
             browser.reloadColumn(1)
         } else if indexPath.length == 2 {
@@ -286,6 +295,7 @@ extension ViewController : NSBrowserDelegate {
         var bytes = [UInt8]()
         let text = textField.stringValue
         for var i = text.startIndex; i < text.endIndex; i = i.advancedBy(2) {
+            //TODO: protect against badly formed strings
             let hexByte = text.substringWithRange(Range<String.Index>(start: i, end: i.advancedBy(2)))
             if let byte:UInt8 = UInt8(hexByte, radix:16) {
                 bytes.append(byte)
@@ -319,10 +329,12 @@ extension ViewController : NSBrowserDelegate {
 
 extension ViewController : CBCentralManagerDelegate {
     func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
+        statusLabel.string = (peripheral.name ?? "") + ":\n connected"
         peripheral.discoverServices(nil)
     }
     
     func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
+        statusLabel.string = (connectedPeripheral?.name ?? "") + ":\n disconnected"
         connectedPeripheral = nil
         //TODO: update view to reflect the peripheral disconnected
     }

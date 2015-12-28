@@ -173,6 +173,10 @@ extension ViewController : NSBrowserDelegate {
         let indexPath = browser.selectionIndexPath
         let column = indexPath.length
         browser.setTitle(self.browser(browser,titleOfColumn:column)!, ofColumn: column)
+        // Automatically reconnect if a service or characteristic is selected.
+        if [2,3].contains(indexPath.length) {
+            reconnectPeripheral()
+        }
         if indexPath.length == 1 {
             let peripheral = scanner.devices[indexPath.indexAtPosition(0)]
             if peripheral != connectedPeripheral {
@@ -198,6 +202,12 @@ extension ViewController : NSBrowserDelegate {
             }
         }
         setupCharacteristicControls()
+    }
+    
+    func reconnectPeripheral() {
+        if let connectedPeripheral = connectedPeripheral where connectedPeripheral.state != .Connected {
+            scanner.central.connectPeripheral(connectedPeripheral, options: [:])
+        }
     }
     
     func setupCharacteristicControls() {
@@ -334,9 +344,11 @@ extension ViewController : CBCentralManagerDelegate {
     }
     
     func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
-        statusLabel.string = (connectedPeripheral?.name ?? "") + ":\n disconnected"
-        connectedPeripheral = nil
-        //TODO: update view to reflect the peripheral disconnected
+        if let connectedPeripheral = connectedPeripheral {
+            statusLabel.string = (connectedPeripheral.name ?? "") + ":\n disconnected"
+        } else {
+            statusLabel.string = ""
+        }
     }
     
     func centralManagerDidUpdateState(central: CBCentralManager) {}
@@ -346,10 +358,34 @@ extension ViewController : CBCentralManagerDelegate {
 extension ViewController : CBPeripheralDelegate {
     func peripheral(peripheral: CBPeripheral, didDiscoverServices error: NSError?) {
         browser.reloadColumn(1)
+        if browser.selectionIndexPath.length == 2 {
+            browserAction(browser)
+        } else if let services = peripheral.services {
+            for service in services {
+                if service.UUID == selectedService?.UUID {
+                    selectedService = service
+                    peripheral.discoverCharacteristics(nil, forService: service)
+                }
+            }
+        }
     }
     
     func peripheral(peripheral: CBPeripheral, didDiscoverCharacteristicsForService service: CBService, error: NSError?) {
         browser.reloadColumn(2)
+        if browser.selectionIndexPath.length == 3 {
+            browserAction(browser)
+        } else if let characteristics = service.characteristics {
+            for characteristic in characteristics {
+                if characteristic.UUID == selectedCharacteristic?.UUID {
+                    selectedCharacteristic = characteristic
+                    if characteristic.properties.contains(.Read) {
+                        readCharacteristic()
+                        
+                    }
+                    refreshCharacteristicDetail()
+                }
+            }
+        }
     }
     
     func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {

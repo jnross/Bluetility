@@ -13,6 +13,7 @@
 		374931921BF169C90087E39F /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 374931901BF169C90087E39F /* Main.storyboard */; };
 		3749319A1BF16D980087E39F /* BluetilityWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374931991BF16D980087E39F /* BluetilityWindowController.swift */; };
 		3749319C1BF173470087E39F /* Scanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3749319B1BF173470087E39F /* Scanner.swift */; };
+		3769BDE01C308814004C089D /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 3769BDDF1C308814004C089D /* Credits.html */; };
 		37F9CCD51C21D856003580CB /* PasteboardBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F9CCD41C21D856003580CB /* PasteboardBrowser.swift */; };
 /* End PBXBuildFile section */
 
@@ -25,6 +26,7 @@
 		374931931BF169C90087E39F /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		374931991BF16D980087E39F /* BluetilityWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetilityWindowController.swift; sourceTree = "<group>"; };
 		3749319B1BF173470087E39F /* Scanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scanner.swift; sourceTree = "<group>"; };
+		3769BDDF1C308814004C089D /* Credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
 		37F9CCD41C21D856003580CB /* PasteboardBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasteboardBrowser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -66,6 +68,7 @@
 				374931901BF169C90087E39F /* Main.storyboard */,
 				374931931BF169C90087E39F /* Info.plist */,
 				37F9CCD41C21D856003580CB /* PasteboardBrowser.swift */,
+				3769BDDF1C308814004C089D /* Credits.html */,
 			);
 			path = Bluetility;
 			sourceTree = "<group>";
@@ -129,6 +132,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				3749318F1BF169C90087E39F /* Assets.xcassets in Resources */,
+				3769BDE01C308814004C089D /* Credits.html in Resources */,
 				374931921BF169C90087E39F /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

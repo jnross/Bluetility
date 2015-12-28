@@ -247,7 +247,7 @@
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <toolbar key="toolbar" implicitIdentifier="533C158D-7680-47F3-990F-C93EB5726D4D" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="Apq-FO-k1s">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="40F96AE3-F3F8-449C-AC48-175219A4BF4E" label="Refresh" paletteLabel="Refresh" tag="-1" image="NSRefreshTemplate" id="kSv-rP-wzc">
+                                <toolbarItem implicitItemIdentifier="40F96AE3-F3F8-449C-AC48-175219A4BF4E" label="Refresh" paletteLabel="Refresh" tag="-1" image="Refresh" id="kSv-rP-wzc">
                                     <connections>
                                         <action selector="refreshPressed:" target="B8D-0N-5wS" id="bVn-H7-IV3"/>
                                     </connections>
@@ -261,7 +261,7 @@
                                     <size key="minSize" width="150" height="0.0"/>
                                     <size key="maxSize" width="150" height="0.0"/>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="660AAC15-A283-4910-BA13-9D6F5BC92C9B" label="Sort" paletteLabel="Sort" tag="-1" id="kSU-oa-g28"/>
+                                <toolbarItem implicitItemIdentifier="660AAC15-A283-4910-BA13-9D6F5BC92C9B" label="Sort" paletteLabel="Sort" tag="-1" image="SortBySignal" id="kSU-oa-g28"/>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="kSv-rP-wzc"/>
@@ -362,6 +362,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="NSRefreshTemplate" width="11" height="15"/>
+        <image name="Refresh" width="22" height="22"/>
+        <image name="SortBySignal" width="295" height="295"/>
     </resources>
 </document>

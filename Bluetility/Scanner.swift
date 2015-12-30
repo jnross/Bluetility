@@ -58,7 +58,11 @@ extension Scanner : CBCentralManagerDelegate {
             devices.append(peripheral)
         }
         rssiForPeripheral[peripheral] = RSSI
-        advDataForPeripheral[peripheral] = advertisementData
+        if advDataForPeripheral[peripheral] != nil {
+            advDataForPeripheral[peripheral]! += advertisementData
+        } else {
+            advDataForPeripheral[peripheral] = advertisementData
+        }
     }
     
     func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
@@ -67,6 +71,12 @@ extension Scanner : CBCentralManagerDelegate {
     
     func centralManager(central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: NSError?) {
         delegate?.centralManager?(central, didDisconnectPeripheral: peripheral, error: error)
+    }
+}
+
+func += <KeyType, ValueType> (inout left: Dictionary<KeyType, ValueType>, right: Dictionary<KeyType, ValueType>) {
+    for (k, v) in right {
+        left.updateValue(v, forKey: k)
     }
 }
 

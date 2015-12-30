@@ -177,7 +177,15 @@ extension ViewController : NSBrowserDelegate {
     func tooltipStringForAdvData(advData:[String:AnyObject]) -> String {
         var tooltip = ""
         if let mfgData = advData[CBAdvertisementDataManufacturerDataKey] as? NSData {
-            tooltip += "Mfg Data:\t\t\(hexStringForData(mfgData))\n"        }
+            tooltip += "Mfg Data:\t\t\(hexStringForData(mfgData))\n"
+            var bytes = [UInt8](count: mfgData.length, repeatedValue: 0)
+            mfgData.getBytes(&bytes, length: mfgData.length)
+            if bytes[0] == 0xd9 && bytes[1] == 0x01 {
+                let uidBytes = [UInt8](bytes[6..<14])
+                let uidData = NSData(bytes: uidBytes, length: uidBytes.count)
+                tooltip += "UID:\t\t\t\(hexStringForData(uidData))\n"
+            }
+        }
         if let localName = advData[CBAdvertisementDataLocalNameKey] as? String {
             tooltip += "Local Name:\t\(localName)\n"
         }

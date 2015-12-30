@@ -30,6 +30,8 @@ class ViewController: NSViewController {
     
     var logWindowController:NSWindowController? = nil
     var logViewController:LogViewController? = nil
+    var tooltipTagForRow:[Int:NSToolTipTag] = [:]
+    var rowForTooltipTag:[NSToolTipTag:Int] = [:]
     
 
     override func viewDidLoad() {
@@ -86,6 +88,7 @@ class ViewController: NSViewController {
         connectedPeripheral = nil
         selectedService = nil
         scanner.restart()
+        resetTooltips()
     }
     
     @IBAction func sortPressed(sender: AnyObject?) {
@@ -110,6 +113,12 @@ class ViewController: NSViewController {
     func listUpdateTimerFired() {
         browser.reloadColumn(0)
     }
+    
+    func resetTooltips() {
+        browser.removeAllToolTips()
+        rowForTooltipTag = [:]
+        tooltipTagForRow = [:]
+    }
 }
 
 extension ViewController : NSBrowserDelegate {
@@ -133,6 +142,12 @@ extension ViewController : NSBrowserDelegate {
         case 0:
             let peripheral = scanner.devices[row]
             cell.title = (peripheral.name ?? "Untitled") + "(\(scanner.rssiForPeripheral[peripheral] ?? 0))"
+            let rect = browser.frameOfRow(row, inColumn: column)
+            if tooltipTagForRow[row] == nil {
+                let tag = browser.addToolTipRect(rect, owner: self, userData: nil)
+                tooltipTagForRow[row] = tag
+                rowForTooltipTag[tag] = row
+            }
         case 1:
             if let service = connectedPeripheral?.services?[row] {
                 cell.title = titleForUUID(service.UUID)
@@ -146,6 +161,41 @@ extension ViewController : NSBrowserDelegate {
         default:
             break
         }
+    }
+    
+    override func view(view: NSView, stringForToolTip tag: NSToolTipTag, point: NSPoint, userData data: UnsafeMutablePointer<Void>) -> String {
+        if let row = rowForTooltipTag[tag] {
+            let peripheral = scanner.devices[row]
+            if let advData = scanner.advDataForPeripheral[peripheral] {
+                return tooltipStringForAdvData(advData)
+            }
+            
+        }
+        return ""
+    }
+    
+    func tooltipStringForAdvData(advData:[String:AnyObject]) -> String {
+        var tooltip = ""
+        if let mfgData = advData[CBAdvertisementDataManufacturerDataKey] as? NSData {
+            tooltip += "Mfg Data:\t\t\(hexStringForData(mfgData))\n"        }
+        if let localName = advData[CBAdvertisementDataLocalNameKey] as? String {
+            tooltip += "Local Name:\t\(localName)\n"
+        }
+        var allServiceUUIDs:[CBUUID] = []
+        if let serviceUUIDs = advData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
+            allServiceUUIDs += serviceUUIDs
+        }
+        if let serviceUUIDs = advData[CBAdvertisementDataOverflowServiceUUIDsKey] as? [CBUUID] {
+            allServiceUUIDs += serviceUUIDs
+        }
+        if allServiceUUIDs.count > 0 {
+            tooltip += "Service UUIDs:\t\(allServiceUUIDs.map({return $0.UUIDString}).joinWithSeparator(", "))\n"
+        }
+        if let txPower = advData[CBAdvertisementDataTxPowerLevelKey] as? NSNumber {
+            tooltip += "Tx Power:\t\t\(txPower)\n"
+        }
+        tooltip = tooltip.stringByTrimmingCharactersInSet(NSCharacterSet(charactersInString: "\n"))
+        return tooltip
     }
     
     func titleForUUID(uuid:CBUUID) -> String {

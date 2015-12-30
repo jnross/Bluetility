@@ -14,6 +14,8 @@
 		3749319A1BF16D980087E39F /* BluetilityWindowController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 374931991BF16D980087E39F /* BluetilityWindowController.swift */; };
 		3749319C1BF173470087E39F /* Scanner.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3749319B1BF173470087E39F /* Scanner.swift */; };
 		3769BDE01C308814004C089D /* Credits.html in Resources */ = {isa = PBXBuildFile; fileRef = 3769BDDF1C308814004C089D /* Credits.html */; };
+		3769BDE41C32FB0D004C089D /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769BDE31C32FB0D004C089D /* LogViewController.swift */; };
+		3769BDE61C3338DF004C089D /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769BDE51C3338DF004C089D /* StringUtils.swift */; };
 		37F9CCD51C21D856003580CB /* PasteboardBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F9CCD41C21D856003580CB /* PasteboardBrowser.swift */; };
 /* End PBXBuildFile section */
 
@@ -27,6 +29,8 @@
 		374931991BF16D980087E39F /* BluetilityWindowController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BluetilityWindowController.swift; sourceTree = "<group>"; };
 		3749319B1BF173470087E39F /* Scanner.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Scanner.swift; sourceTree = "<group>"; };
 		3769BDDF1C308814004C089D /* Credits.html */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.html; path = Credits.html; sourceTree = "<group>"; };
+		3769BDE31C32FB0D004C089D /* LogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
+		3769BDE51C3338DF004C089D /* StringUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
 		37F9CCD41C21D856003580CB /* PasteboardBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasteboardBrowser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -69,6 +73,8 @@
 				374931931BF169C90087E39F /* Info.plist */,
 				37F9CCD41C21D856003580CB /* PasteboardBrowser.swift */,
 				3769BDDF1C308814004C089D /* Credits.html */,
+				3769BDE31C32FB0D004C089D /* LogViewController.swift */,
+				3769BDE51C3338DF004C089D /* StringUtils.swift */,
 			);
 			path = Bluetility;
 			sourceTree = "<group>";
@@ -147,8 +153,10 @@
 				3749319A1BF16D980087E39F /* BluetilityWindowController.swift in Sources */,
 				3749318D1BF169C90087E39F /* ViewController.swift in Sources */,
 				37F9CCD51C21D856003580CB /* PasteboardBrowser.swift in Sources */,
+				3769BDE41C32FB0D004C089D /* LogViewController.swift in Sources */,
 				3749319C1BF173470087E39F /* Scanner.swift in Sources */,
 				3749318B1BF169C90087E39F /* AppDelegate.swift in Sources */,
+				3769BDE61C3338DF004C089D /* StringUtils.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

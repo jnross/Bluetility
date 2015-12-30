@@ -262,10 +262,12 @@
                                     <size key="maxSize" width="150" height="0.0"/>
                                 </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="660AAC15-A283-4910-BA13-9D6F5BC92C9B" label="Sort" paletteLabel="Sort" tag="-1" image="SortBySignal" id="kSU-oa-g28"/>
+                                <toolbarItem implicitItemIdentifier="2362131C-9542-43CD-AC53-E48E1171B9D0" label="Log" paletteLabel="Log" tag="-1" image="Logs" id="K8I-0P-t4B" userLabel="Log"/>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
                                 <toolbarItem reference="kSv-rP-wzc"/>
                                 <toolbarItem reference="kSU-oa-g28"/>
+                                <toolbarItem reference="K8I-0P-t4B"/>
                                 <toolbarItem reference="3rr-ib-C5l"/>
                                 <toolbarItem reference="uCq-Za-ArI"/>
                             </defaultToolbarItems>
@@ -287,8 +289,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
                         <autoresizingMask key="autoresizingMask"/>
                         <subviews>
-                            <browser verticalHuggingPriority="750" misplaced="YES" allowsExpansionToolTips="YES" enabled="YES" hasHorizontalScroller="YES" allowsEmptySelection="YES" defaultColumnWidth="280" minColumnWidth="100" maxVisibleColumns="4" titled="YES" separatesColumns="YES" allowsTypeSelect="YES" columnResizingType="user" translatesAutoresizingMaskIntoConstraints="NO" id="kaT-gA-YGL" customClass="PasteboardBrowser" customModule="Bluetility" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                            <browser verticalHuggingPriority="750" allowsExpansionToolTips="YES" enabled="YES" hasHorizontalScroller="YES" allowsEmptySelection="YES" defaultColumnWidth="280" minColumnWidth="100" maxVisibleColumns="4" titled="YES" separatesColumns="YES" allowsTypeSelect="YES" columnResizingType="user" translatesAutoresizingMaskIntoConstraints="NO" id="kaT-gA-YGL" customClass="PasteboardBrowser" customModule="Bluetility" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
                                 <connections>
                                     <action selector="browserAction:" target="XfG-lQ-9wD" id="r6B-Mu-1fT"/>
                                     <outlet property="delegate" destination="XfG-lQ-9wD" id="P1s-MW-ZXD"/>
@@ -360,8 +362,114 @@
             </objects>
             <point key="canvasLocation" x="68" y="664"/>
         </scene>
+        <!--Window Controller-->
+        <scene sceneID="7iB-mi-oNm">
+            <objects>
+                <windowController storyboardIdentifier="LogWindow" id="ejM-CV-OXj" sceneMemberID="viewController">
+                    <window key="window" title="Log" allowsToolTipsWhenApplicationIsInactive="NO" autorecalculatesKeyViewLoop="NO" oneShot="NO" releasedWhenClosed="NO" showsToolbarButton="NO" visibleAtLaunch="NO" frameAutosaveName="" animationBehavior="default" id="sLI-m0-NJn">
+                        <windowStyleMask key="styleMask" titled="YES" closable="YES" miniaturizable="YES" resizable="YES"/>
+                        <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
+                        <rect key="contentRect" x="245" y="301" width="480" height="270"/>
+                        <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
+                    </window>
+                    <connections>
+                        <segue destination="Bdq-l6-hti" kind="relationship" relationship="window.shadowedContentViewController" id="UZI-fK-ac6"/>
+                    </connections>
+                </windowController>
+                <customObject id="v3a-HE-CW9" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="750" y="91"/>
+        </scene>
+        <!--Log View Controller-->
+        <scene sceneID="hDm-x4-iMD">
+            <objects>
+                <viewController id="Bdq-l6-hti" customClass="LogViewController" customModule="Bluetility" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" id="2Ns-Nd-f7N">
+                        <rect key="frame" x="0.0" y="0.0" width="596" height="426"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                        <subviews>
+                            <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P7L-k4-bri">
+                                <rect key="frame" x="0.0" y="40" width="596" height="386"/>
+                                <clipView key="contentView" id="2Xa-dh-JJf">
+                                    <rect key="frame" x="1" y="1" width="594" height="384"/>
+                                    <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                    <subviews>
+                                        <textView editable="NO" importsGraphics="NO" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" usesFontPanel="YES" verticallyResizable="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="7yB-pE-MlB">
+                                            <rect key="frame" x="0.0" y="0.0" width="594" height="384"/>
+                                            <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                                            <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                            <size key="minSize" width="594" height="384"/>
+                                            <size key="maxSize" width="594" height="10000000"/>
+                                            <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <size key="minSize" width="594" height="384"/>
+                                            <size key="maxSize" width="594" height="10000000"/>
+                                        </textView>
+                                    </subviews>
+                                    <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </clipView>
+                                <scroller key="horizontalScroller" hidden="YES" verticalHuggingPriority="750" doubleValue="1" horizontal="YES" id="ylM-PG-hxV">
+                                    <rect key="frame" x="-100" y="-100" width="87" height="18"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                                <scroller key="verticalScroller" verticalHuggingPriority="750" horizontal="NO" id="kj7-ZQ-T3n">
+                                    <rect key="frame" x="579" y="1" width="16" height="384"/>
+                                    <autoresizingMask key="autoresizingMask"/>
+                                </scroller>
+                            </scrollView>
+                            <view translatesAutoresizingMaskIntoConstraints="NO" id="cGh-y9-3yU">
+                                <rect key="frame" x="196" y="0.0" width="205" height="40"/>
+                                <subviews>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MGW-TM-pTE">
+                                        <rect key="frame" x="2" y="3" width="99" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Save CSV" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LaJ-ps-CFx">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="saveCSVPressed:" target="Bdq-l6-hti" id="KaF-KK-BGA"/>
+                                        </connections>
+                                    </button>
+                                    <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C7q-vd-st2">
+                                        <rect key="frame" x="105" y="3" width="98" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Clear Log" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oVm-Y4-6UC">
+                                            <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
+                                            <font key="font" metaFont="system"/>
+                                        </buttonCell>
+                                        <connections>
+                                            <action selector="clearLogPressed:" target="Bdq-l6-hti" id="olk-rg-3bM"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="C7q-vd-st2" firstAttribute="centerY" secondItem="cGh-y9-3yU" secondAttribute="centerY" id="81d-6f-iva"/>
+                                    <constraint firstAttribute="height" constant="40" id="HBz-tE-yrZ"/>
+                                    <constraint firstItem="MGW-TM-pTE" firstAttribute="centerY" secondItem="cGh-y9-3yU" secondAttribute="centerY" id="McF-6L-y8v"/>
+                                    <constraint firstAttribute="trailing" secondItem="C7q-vd-st2" secondAttribute="trailing" constant="8" id="W8S-fM-NSC"/>
+                                    <constraint firstItem="C7q-vd-st2" firstAttribute="leading" secondItem="MGW-TM-pTE" secondAttribute="trailing" constant="16" id="Ycc-cA-MsR"/>
+                                    <constraint firstItem="MGW-TM-pTE" firstAttribute="leading" secondItem="cGh-y9-3yU" secondAttribute="leading" constant="8" id="z7d-qz-9cB"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <constraints>
+                            <constraint firstItem="cGh-y9-3yU" firstAttribute="top" secondItem="P7L-k4-bri" secondAttribute="bottom" id="90Y-iM-Gee"/>
+                            <constraint firstAttribute="bottom" secondItem="cGh-y9-3yU" secondAttribute="bottom" id="CXs-iY-TVT"/>
+                            <constraint firstItem="P7L-k4-bri" firstAttribute="top" secondItem="2Ns-Nd-f7N" secondAttribute="top" id="KBT-1N-xid"/>
+                            <constraint firstAttribute="trailing" secondItem="P7L-k4-bri" secondAttribute="trailing" id="lCE-Jm-4An"/>
+                            <constraint firstItem="cGh-y9-3yU" firstAttribute="centerX" secondItem="2Ns-Nd-f7N" secondAttribute="centerX" id="pLH-0h-X8K"/>
+                            <constraint firstItem="P7L-k4-bri" firstAttribute="leading" secondItem="2Ns-Nd-f7N" secondAttribute="leading" id="sIN-eZ-4Kr"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="logText" destination="7yB-pE-MlB" id="Iut-9C-NnT"/>
+                    </connections>
+                </viewController>
+                <customObject id="YkO-4s-u04" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="750" y="616"/>
+        </scene>
     </scenes>
     <resources>
+        <image name="Logs" width="34" height="34"/>
         <image name="Refresh" width="22" height="22"/>
         <image name="SortBySignal" width="295" height="295"/>
     </resources>

@@ -28,6 +28,9 @@ class ViewController: NSViewController {
     
     var statusLabel:NSTextView = NSTextView()
     
+    var logWindowController:NSWindowController? = nil
+    var logViewController:LogViewController? = nil
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,7 +50,9 @@ class ViewController: NSViewController {
         refreshItem?.target = self
         let sortItem = self.view.window?.toolbar?.items[1]
         sortItem?.action = Selector("sortPressed:")
-        if let statusItem = self.view.window?.toolbar?.items[3] {
+        let logItem = self.view.window?.toolbar?.items[2]
+        logItem?.action = Selector("logPressed:")
+        if let statusItem = self.view.window?.toolbar?.items[4] {
             statusLabel.editable = false
             statusLabel.backgroundColor = NSColor.clearColor()
             statusItem.view = statusLabel
@@ -85,6 +90,21 @@ class ViewController: NSViewController {
     
     @IBAction func sortPressed(sender: AnyObject?) {
         scanner.devices.sortInPlace { return scanner.rssiForPeripheral[$0]?.intValue ?? 0 > scanner.rssiForPeripheral[$1]?.intValue ?? 0 }
+    }
+    
+    @IBAction func logPressed(sender: NSToolbarItem) {
+        if let window = logWindowController?.window where window.visible || window.miniaturized {
+            window.makeKeyAndOrderFront(self)
+        } else {
+            logWindowController?.window?.close()
+            if let logWindowController = self.storyboard?.instantiateControllerWithIdentifier("LogWindow") as? NSWindowController {
+                logWindowController.shouldCascadeWindows = false
+                logWindowController.window?.setFrameAutosaveName("bluetility_log")
+                logWindowController.showWindow(sender)
+                self.logWindowController = logWindowController
+                self.logViewController = logWindowController.contentViewController as? LogViewController
+            }
+        }
     }
     
     func listUpdateTimerFired() {
@@ -257,14 +277,9 @@ extension ViewController : NSBrowserDelegate {
                 cell.title = "ASCII:\t" + ascii
             }
         case 1:
-            var hex:String = "0x"
-            var bytes:[UInt8] = []
+            var hex:String = ""
             if let value = characteristic.value {
-                bytes = [UInt8](count:value.length, repeatedValue:0)
-                value.getBytes(&bytes, length: value.length)
-            }
-            for byte in bytes {
-                hex += String(byte, radix:16)
+                hex = hexStringForData(value)
             }
             cell.title = "Hex:\t\t" + hex
         case 2:
@@ -335,6 +350,11 @@ extension ViewController : NSBrowserDelegate {
                 connectedPeripheral?.writeValue(data, forCharacteristic: characteristic, type: writeType)
         }
     }
+    
+    func appendLog(message:String) {
+        logViewController?.logText.textStorage?.appendAttributedString(NSAttributedString(string:message + "\n"))
+        logViewController?.logText.scrollToEndOfDocument(self)
+    }
 }
 
 extension ViewController : CBCentralManagerDelegate {
@@ -389,9 +409,14 @@ extension ViewController : CBPeripheralDelegate {
     }
     
     func peripheral(peripheral: CBPeripheral, didUpdateValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+        logViewController?.appendRead(characteristic)
         if characteristic == selectedCharacteristic {
             characteristicUpdatedDate = NSDate()
             refreshCharacteristicDetail()
         }
+    }
+    
+    func peripheral(peripheral: CBPeripheral, didWriteValueForCharacteristic characteristic: CBCharacteristic, error: NSError?) {
+        logViewController?.appendWrite(characteristic)
     }
 }

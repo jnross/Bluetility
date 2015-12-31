@@ -15,6 +15,8 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
     func applicationDidFinishLaunching(aNotification: NSNotification) {
         // Insert code here to initialize your application
+        let defaults = ["NSToolTipAutoWrappingDisabled" : NSNumber(bool: true)]
+        NSUserDefaults.standardUserDefaults().registerDefaults(defaults)
     }
 
     func applicationWillTerminate(aNotification: NSNotification) {

@@ -8,6 +8,10 @@
 
 import Cocoa
 
+protocol IndexPathPasteboardDelegate {
+    func pasteboardStringForIndexPath(indexPath:NSIndexPath) -> String?
+}
+
 class PasteboardBrowser: NSBrowser {
 
     override func drawRect(dirtyRect: NSRect) {
@@ -18,12 +22,17 @@ class PasteboardBrowser: NSBrowser {
     
     @IBAction
     func copy(sender:AnyObject) {
-        if let cell = self.selectedCell() as? NSBrowserCell {
-            let text = cell.title
-            let pb = NSPasteboard.generalPasteboard()
-            pb.declareTypes([NSStringPboardType], owner: self)
-            pb.setString(text, forType: NSStringPboardType)
+        var string:String? = nil
+        if let pasteboardDelegate = self.delegate as? IndexPathPasteboardDelegate {
+            string = pasteboardDelegate.pasteboardStringForIndexPath(self.selectionIndexPath)
         }
+        if string == nil {
+            string = (self.selectedCell() as? NSBrowserCell)?.title
+        }
+        guard let pasteString = string else {return}
+        let pb = NSPasteboard.generalPasteboard()
+        pb.declareTypes([NSStringPboardType], owner: self)
+        pb.setString(pasteString, forType: NSStringPboardType)
     }
     
 }

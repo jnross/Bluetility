@@ -415,6 +415,17 @@ extension ViewController : NSBrowserDelegate {
     }
 }
 
+extension ViewController : IndexPathPasteboardDelegate {
+    func pasteboardStringForIndexPath(indexPath: NSIndexPath) -> String? {
+        if indexPath.length == 1 {
+            let row = indexPath.indexAtPosition(0)
+            guard let tag = tooltipTagForRow[row], peripheralName = scanner.devices[row].name else {return nil}
+            return "Name:\t\t\t\(peripheralName)\n" + self.view(browser, stringForToolTip: tag, point: NSPoint(), userData: nil)
+        }
+        return nil
+    }
+}
+
 extension ViewController : CBCentralManagerDelegate {
     func centralManager(central: CBCentralManager, didConnectPeripheral peripheral: CBPeripheral) {
         statusLabel.string = (peripheral.name ?? "") + ":\n connected"

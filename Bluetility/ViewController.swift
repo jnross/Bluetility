@@ -289,14 +289,21 @@ extension ViewController : NSBrowserDelegate {
     }
     
     func setupCharacteristicControls() {
-        
+        let minimumWidth = CGFloat(150)
         let frameWidth = view.frame.size.width
         var otherWidth = browser.widthOfColumn(0)
         otherWidth += browser.widthOfColumn(1)
         otherWidth += browser.widthOfColumn(2)
         
-        let fitWidth = max(frameWidth - otherWidth - 6, 100)
-        browser.setWidth(fitWidth, ofColumn: 3)
+        let fitWidth = frameWidth - otherWidth - 6
+        if fitWidth >= minimumWidth {
+            browser.setWidth(fitWidth, ofColumn: 3)
+            browser.scrollColumnToVisible(0)
+        } else {
+            browser.setWidth(minimumWidth, ofColumn: 3)
+            browser.scrollColumnToVisible(0)
+            browser.scrollColumnToVisible(3)
+        }
         
         readButton.removeFromSuperview()
         subscribeButton.removeFromSuperview()

@@ -14,10 +14,11 @@ Bluetility is a general-purpose Bluetooth Low-Energy utility for Mac OS X.  It s
 * View log of characteristic read/writes, logs may be saved as CSV
 
 ##Motivation
-Bluetility is inspired by [LightBlue](https://itunes.apple.com/us/app/lightblue/id639944780?mt=12), a free bluetooth utility published by [Punch Through Design](https://punchthrough.com/).  Bluetility was created to resolved issues in this tool, and add missing features:
+Bluetility is inspired by [LightBlue](https://itunes.apple.com/us/app/lightblue/id639944780?mt=12), a free bluetooth utility published by [Punch Through Design](https://punchthrough.com/).  Bluetility was created to resolve issues in this tool, and add missing features:
 
 * Support copy/paste via Cmd+C and Cmd+V
 * Sort peripherals by received signal strength
 * View advertising data
+* Automatically reconnect to disconnect peripherals when needed
 
 Bluetility is published as open-source so that anyone can tweak or improve its functionality to meet their own needs.

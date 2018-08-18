@@ -12,7 +12,7 @@ import CoreBluetooth
 class LogViewController: NSViewController {
     
     @IBOutlet var logText:NSTextView! = nil
-    private var logEntries:[LogEntry] = []
+    fileprivate var logEntries:[LogEntry] = []
     var savePanel:NSSavePanel!
     
     override func viewDidLoad() {
@@ -20,54 +20,54 @@ class LogViewController: NSViewController {
         // Do view setup here.
     }
     
-    func appendRead(characteristic:CBCharacteristic) {
+    func appendRead(_ characteristic:CBCharacteristic) {
         appendCharacteristicOperation(characteristic, operationType: .Read)
     }
     
-    func appendWrite(characteristic:CBCharacteristic) {
+    func appendWrite(_ characteristic:CBCharacteristic) {
         appendCharacteristicOperation(characteristic, operationType: .Write)
     }
     
-    private func appendCharacteristicOperation(characteristic:CBCharacteristic, operationType:OperationType) {
-        let data = characteristic.value ?? NSData()
+    fileprivate func appendCharacteristicOperation(_ characteristic:CBCharacteristic, operationType:OperationType) {
+        let data = characteristic.value ?? Data()
         let hexString = hexStringForData(data)
-        appendLogText("UUID \(characteristic.UUID.UUIDString) \(operationType) Value: 0x\(hexString)")
-        let logEntry = LogEntry(serviceUUID: characteristic.service.UUID.UUIDString,
-            charUUID: characteristic.UUID.UUIDString,
+        appendLogText("UUID \(characteristic.uuid.uuidString) \(operationType) Value: 0x\(hexString)")
+        let logEntry = LogEntry(serviceUUID: characteristic.service.uuid.uuidString,
+            charUUID: characteristic.uuid.uuidString,
             operation: operationType,
             data: hexString,
-            timestamp: NSDate()
+            timestamp: Date()
         )
         logEntries.append(logEntry)
     }
     
-    func appendLogText(message:String) {
-        logText.textStorage?.appendAttributedString(NSAttributedString(string:message + "\n"))
+    func appendLogText(_ message:String) {
+        logText.textStorage?.append(NSAttributedString(string:message + "\n"))
         logText.scrollToEndOfDocument(self)
     }
     
-    @IBAction func clearLogPressed(sender:NSButton) {
+    @IBAction func clearLogPressed(_ sender:NSButton) {
         logText.string = ""
         logEntries = []
     }
     
-    @IBAction func saveCSVPressed(sender:NSButton) {
+    @IBAction func saveCSVPressed(_ sender:NSButton) {
         savePanel = NSSavePanel()
         savePanel.allowedFileTypes = ["csv"]
         //savePanel.nameFieldStringValue = "Save Logs as csv"
-        savePanel.beginSheetModalForWindow(self.view.window!) { (result) -> Void in
+        savePanel.beginSheetModal(for: self.view.window!) { (result) -> Void in
             if result == NSFileHandlingPanelOKButton {
                 self.savePanel.orderOut(self)
-                if let selectedUrl = self.savePanel.URL {
+                if let selectedUrl = self.savePanel.url {
                     var contents:String = "service,characteristic,operation,data,timestamp\n"
-                    let dateFormatter = NSDateFormatter()
+                    let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                     for logEntry in self.logEntries {
-                        let timeString = dateFormatter.stringFromDate(logEntry.timestamp)
+                        let timeString = dateFormatter.string(from: logEntry.timestamp)
                         contents += "\(logEntry.serviceUUID),\(logEntry.charUUID),\(logEntry.operation),\(logEntry.data),\(timeString)\n"
                     }
                     do {
-                        try contents.writeToURL(selectedUrl, atomically: true, encoding: NSUTF8StringEncoding)
+                        try contents.write(to: selectedUrl, atomically: true, encoding: String.Encoding.utf8)
                     } catch {
                         //TODO: Display error to user
                     }
@@ -87,5 +87,5 @@ private struct LogEntry {
     let charUUID:String
     let operation:OperationType
     let data:String
-    let timestamp:NSDate
+    let timestamp:Date
 }

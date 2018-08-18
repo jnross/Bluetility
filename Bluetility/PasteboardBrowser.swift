@@ -9,19 +9,19 @@
 import Cocoa
 
 protocol IndexPathPasteboardDelegate {
-    func pasteboardStringForIndexPath(indexPath:NSIndexPath) -> String?
+    func pasteboardStringForIndexPath(_ indexPath:IndexPath) -> String?
 }
 
 class PasteboardBrowser: NSBrowser {
 
-    override func drawRect(dirtyRect: NSRect) {
-        super.drawRect(dirtyRect)
+    override func draw(_ dirtyRect: NSRect) {
+        super.draw(dirtyRect)
 
         // Drawing code here.
     }
     
     @IBAction
-    func copy(sender:AnyObject) {
+    func copy(_ sender:AnyObject) {
         var string:String? = nil
         if let pasteboardDelegate = self.delegate as? IndexPathPasteboardDelegate {
             string = pasteboardDelegate.pasteboardStringForIndexPath(self.selectionIndexPath)
@@ -30,7 +30,7 @@ class PasteboardBrowser: NSBrowser {
             string = (self.selectedCell() as? NSBrowserCell)?.title
         }
         guard let pasteString = string else {return}
-        let pb = NSPasteboard.generalPasteboard()
+        let pb = NSPasteboard.general()
         pb.declareTypes([NSStringPboardType], owner: self)
         pb.setString(pasteString, forType: NSStringPboardType)
     }

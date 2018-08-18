@@ -56,7 +56,7 @@ class LogViewController: NSViewController {
         savePanel.allowedFileTypes = ["csv"]
         //savePanel.nameFieldStringValue = "Save Logs as csv"
         savePanel.beginSheetModal(for: self.view.window!) { (result) -> Void in
-            if result == NSFileHandlingPanelOKButton {
+            if result.rawValue == NSFileHandlingPanelOKButton {
                 self.savePanel.orderOut(self)
                 if let selectedUrl = self.savePanel.url {
                     var contents:String = "service,characteristic,operation,data,timestamp\n"

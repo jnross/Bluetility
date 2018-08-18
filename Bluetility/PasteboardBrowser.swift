@@ -24,15 +24,15 @@ class PasteboardBrowser: NSBrowser {
     func copy(_ sender:AnyObject) {
         var string:String? = nil
         if let pasteboardDelegate = self.delegate as? IndexPathPasteboardDelegate {
-            string = pasteboardDelegate.pasteboardStringForIndexPath(self.selectionIndexPath)
+            string = pasteboardDelegate.pasteboardStringForIndexPath(self.selectionIndexPath!)
         }
         if string == nil {
             string = (self.selectedCell() as? NSBrowserCell)?.title
         }
         guard let pasteString = string else {return}
-        let pb = NSPasteboard.general()
-        pb.declareTypes([NSStringPboardType], owner: self)
-        pb.setString(pasteString, forType: NSStringPboardType)
+        let pb = NSPasteboard.general
+        pb.declareTypes([.string], owner: self)
+        pb.setString(pasteString, forType: .string)
     }
     
 }

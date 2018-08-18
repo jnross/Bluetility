@@ -178,11 +178,8 @@ extension ViewController : NSBrowserDelegate {
         var tooltip = ""
         if let mfgData = advData[CBAdvertisementDataManufacturerDataKey] as? Data {
             tooltip += "Mfg Data:\t\t0x\(hexStringForData(mfgData))\n"
-            var bytes = [UInt8](repeating: 0, count: mfgData.count)
-            (mfgData as NSData).getBytes(&bytes, length: mfgData.count)
-            if bytes[0] == 0xd9 && bytes[1] == 0x01 {
-                let uidBytes = [UInt8](bytes[6..<14])
-                let uidData = Data(bytes: UnsafePointer<UInt8>(uidBytes), count: uidBytes.count)
+            if mfgData[0] == 0xd9 && mfgData[1] == 0x01 {
+                let uidData = mfgData[6..<14]
                 tooltip += "UID:\t\t\t\(hexStringForData(uidData))\n"
             }
         }
@@ -349,8 +346,9 @@ extension ViewController : NSBrowserDelegate {
             cell.title = "Hex:\t\t" + hex
         case 2:
             if let value = characteristic.value, value.count <= 8 {
-                var dec:Int64 = 0
-                (value as NSData).getBytes(&dec, length: value.count)
+                let dec = value.withUnsafeBytes { (ptr: UnsafePointer<Int64>) -> Int64 in
+                    return ptr.pointee
+                }
                 cell.title = "Decimal:\t\(dec)"
             }
         case 3:
@@ -394,7 +392,7 @@ extension ViewController : NSBrowserDelegate {
             }
             i = nextIndex
         }
-        let data = Data(bytes: UnsafePointer<UInt8>(bytes), count: bytes.count)
+        let data = Data(bytes: bytes)
         writeDataToSelectedCharacteristic(data)
         
     }

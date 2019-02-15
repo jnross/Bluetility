@@ -111,7 +111,7 @@ class ViewController: NSViewController {
     }
     
     @objc func listUpdateTimerFired() {
-        browser.reloadColumn(0)
+        reloadColumn(0)
     }
     
     func resetTooltips() {
@@ -161,6 +161,10 @@ extension ViewController : NSBrowserDelegate {
         default:
             break
         }
+    }
+    
+    func browser(_ browser: NSBrowser, objectValueForItem item: Any?) -> Any? {
+        return item
     }
     
     override func view(_ view: NSView, stringForToolTip tag: NSView.ToolTipTag, point: NSPoint, userData data: UnsafeMutableRawPointer?) -> String {
@@ -258,13 +262,13 @@ extension ViewController : NSBrowserDelegate {
                 statusLabel.string = ""
             }
             selectPeripheral(peripheral)
-            browser.reloadColumn(1)
+            reloadColumn(1)
         } else if indexPath?.count == 2 {
             if let service = connectedPeripheral?.services?[indexPath![1]] {
                 selectedService = service
                 connectedPeripheral?.discoverCharacteristics(nil, for: service)
                 selectedCharacteristic = nil
-                browser.reloadColumn(2)
+                reloadColumn(2)
             }
         } else if indexPath?.count == 3 {
             if let characteristic = selectedService?.characteristics?[indexPath![2]] {
@@ -326,8 +330,15 @@ extension ViewController : NSBrowserDelegate {
     }
     
     func refreshCharacteristicDetail() {
-        browser.reloadColumn(3)
-        
+      reloadColumn(3)
+    }
+    
+    func reloadColumn(_ column: Int) {
+        browser.reloadColumn(column)
+        for row in 0..<browser(browser, numberOfRowsInColumn: column) {
+            guard let cell = browser.loadedCell(atRow: row, column: column) as? NSBrowserCell else { continue }
+            browser(browser, willDisplayCell: cell, atRow: row, column: column)
+        }
     }
     
     func setupCharacteristicDetailCell(_ cell:NSBrowserCell, forRow row:Int) {
@@ -454,7 +465,7 @@ extension ViewController : CBCentralManagerDelegate {
 
 extension ViewController : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
-        browser.reloadColumn(1)
+        reloadColumn(1)
         if browser.selectionIndexPath?.count == 2 {
             browserAction(browser)
         } else if let services = peripheral.services {
@@ -468,7 +479,7 @@ extension ViewController : CBPeripheralDelegate {
     }
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
-        browser.reloadColumn(2)
+        reloadColumn(2)
         if browser.selectionIndexPath?.count == 3 {
             browserAction(browser)
         } else if let characteristics = service.characteristics {

@@ -9,7 +9,7 @@
 import Cocoa
 import CoreBluetooth
 
-class ViewController: NSViewController {
+class ViewController: NSViewController, NSViewToolTipOwner {
     
     let scanner = Scanner()
     var listUpdateTimer:Timer? = nil
@@ -174,7 +174,7 @@ extension ViewController : NSBrowserDelegate {
         return ""
     }
     
-    func tooltipStringForAdvData(_ advData:[String:AnyObject]) -> String {
+    func tooltipStringForAdvData(_ advData:[String:Any]) -> String {
         var tooltip = ""
         if let mfgData = advData[CBAdvertisementDataManufacturerDataKey] as? Data {
             tooltip += "Mfg Data:\t\t0x\(hexStringForData(mfgData))\n"
@@ -248,29 +248,29 @@ extension ViewController : NSBrowserDelegate {
     
     @IBAction
     func browserAction(_ sender:NSBrowser) {
-        let indexPath = browser.selectionIndexPath
-        let column = indexPath!.count
+        let indexPath = browser.selectionIndexPath! as NSIndexPath
+        let column = indexPath.length
         browser.setTitle(self.browser(browser,titleOfColumn:column)!, ofColumn: column)
         // Automatically reconnect if a service or characteristic is selected.
         if [2,3].contains(column) {
             reconnectPeripheral()
         }
         if column == 1 {
-            let peripheral = scanner.devices[(indexPath as! NSIndexPath).index(atPosition: 0)]
+            let peripheral = scanner.devices[indexPath.index(atPosition: 0)]
             if peripheral != connectedPeripheral {
                 statusLabel.string = ""
             }
             selectPeripheral(peripheral)
             browser.reloadColumn(1)
         } else if column == 2 {
-            if let service = connectedPeripheral?.services?[(indexPath as! NSIndexPath).index(atPosition: 1)] {
+            if let service = connectedPeripheral?.services?[indexPath.index(atPosition: 1)] {
                 selectedService = service
                 connectedPeripheral?.discoverCharacteristics(nil, for: service)
                 selectedCharacteristic = nil
                 browser.reloadColumn(2)
             }
         } else if column == 3 {
-            if let characteristic = selectedService?.characteristics?[(indexPath as! NSIndexPath).index(atPosition: 2)] {
+            if let characteristic = selectedService?.characteristics?[indexPath.index(atPosition: 2)] {
                 selectedCharacteristic = characteristic
                 if characteristic.properties.contains(.read) {
                     readCharacteristic()
@@ -393,9 +393,6 @@ extension ViewController : NSBrowserDelegate {
             }
             i = text.index(i, offsetBy: 2)
         }
-//        for var i = text.startIndex; i < text.endIndex; i = text.index(i, offsetBy: 2) {
-//            
-//        }
         let data = Data(bytes: UnsafePointer<UInt8>(bytes), count: bytes.count)
         writeDataToSelectedCharacteristic(data)
         

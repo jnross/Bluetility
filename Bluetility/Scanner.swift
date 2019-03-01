@@ -14,7 +14,7 @@ class Scanner: NSObject {
     weak var delegate:CBCentralManagerDelegate?
     var devices:[CBPeripheral] = []
     var rssiForPeripheral:[CBPeripheral:NSNumber] = [:]
-    var advDataForPeripheral:[CBPeripheral:[String:AnyObject]] = [:]
+    var advDataForPeripheral:[CBPeripheral:[String:Any]] = [:]
     var started:Bool = false
     
     override init() {
@@ -59,9 +59,9 @@ extension Scanner : CBCentralManagerDelegate {
         }
         rssiForPeripheral[peripheral] = RSSI
         if advDataForPeripheral[peripheral] != nil {
-            advDataForPeripheral[peripheral]! += advertisementData as Dictionary<String, AnyObject>
+            advDataForPeripheral[peripheral]! += advertisementData
         } else {
-            advDataForPeripheral[peripheral] = advertisementData as [String : AnyObject]?
+            advDataForPeripheral[peripheral] = advertisementData
         }
     }
     

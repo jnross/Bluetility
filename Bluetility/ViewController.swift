@@ -30,8 +30,8 @@ class ViewController: NSViewController {
     
     var logWindowController:NSWindowController? = nil
     var logViewController:LogViewController? = nil
-    var tooltipTagForRow:[Int:NSToolTipTag] = [:]
-    var rowForTooltipTag:[NSToolTipTag:Int] = [:]
+    var tooltipTagForRow:[Int:NSView.ToolTipTag] = [:]
+    var rowForTooltipTag:[NSView.ToolTipTag:Int] = [:]
     
 
     override func viewDidLoad() {
@@ -110,7 +110,7 @@ class ViewController: NSViewController {
         }
     }
     
-    func listUpdateTimerFired() {
+    @objc func listUpdateTimerFired() {
         browser.reloadColumn(0)
     }
     
@@ -163,7 +163,7 @@ extension ViewController : NSBrowserDelegate {
         }
     }
     
-    override func view(_ view: NSView, stringForToolTip tag: NSToolTipTag, point: NSPoint, userData data: UnsafeMutableRawPointer?) -> String {
+    func view(_ view: NSView, stringForToolTip tag: NSView.ToolTipTag, point: NSPoint, userData data: UnsafeMutableRawPointer?) -> String {
         if let row = rowForTooltipTag[tag] {
             let peripheral = scanner.devices[row]
             if let advData = scanner.advDataForPeripheral[peripheral] {
@@ -249,28 +249,28 @@ extension ViewController : NSBrowserDelegate {
     @IBAction
     func browserAction(_ sender:NSBrowser) {
         let indexPath = browser.selectionIndexPath
-        let column = indexPath.count
+        let column = indexPath!.count
         browser.setTitle(self.browser(browser,titleOfColumn:column)!, ofColumn: column)
         // Automatically reconnect if a service or characteristic is selected.
-        if [2,3].contains(indexPath.count) {
+        if [2,3].contains(column) {
             reconnectPeripheral()
         }
-        if indexPath.count == 1 {
-            let peripheral = scanner.devices[(indexPath as NSIndexPath).index(atPosition: 0)]
+        if column == 1 {
+            let peripheral = scanner.devices[(indexPath as! NSIndexPath).index(atPosition: 0)]
             if peripheral != connectedPeripheral {
                 statusLabel.string = ""
             }
             selectPeripheral(peripheral)
             browser.reloadColumn(1)
-        } else if indexPath.count == 2 {
-            if let service = connectedPeripheral?.services?[(indexPath as NSIndexPath).index(atPosition: 1)] {
+        } else if column == 2 {
+            if let service = connectedPeripheral?.services?[(indexPath as! NSIndexPath).index(atPosition: 1)] {
                 selectedService = service
                 connectedPeripheral?.discoverCharacteristics(nil, for: service)
                 selectedCharacteristic = nil
                 browser.reloadColumn(2)
             }
-        } else if indexPath.count == 3 {
-            if let characteristic = selectedService?.characteristics?[(indexPath as NSIndexPath).index(atPosition: 2)] {
+        } else if column == 3 {
+            if let characteristic = selectedService?.characteristics?[(indexPath as! NSIndexPath).index(atPosition: 2)] {
                 selectedCharacteristic = characteristic
                 if characteristic.properties.contains(.read) {
                     readCharacteristic()
@@ -459,7 +459,7 @@ extension ViewController : CBCentralManagerDelegate {
 extension ViewController : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         browser.reloadColumn(1)
-        if browser.selectionIndexPath.count == 2 {
+        if browser.selectionIndexPath!.count == 2 {
             browserAction(browser)
         } else if let services = peripheral.services {
             for service in services {
@@ -473,7 +473,7 @@ extension ViewController : CBPeripheralDelegate {
     
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         browser.reloadColumn(2)
-        if browser.selectionIndexPath.count == 3 {
+        if browser.selectionIndexPath!.count == 3 {
             browserAction(browser)
         } else if let characteristics = service.characteristics {
             for characteristic in characteristics {

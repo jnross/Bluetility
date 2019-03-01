@@ -13,17 +13,17 @@ class AppDelegate: NSObject, NSApplicationDelegate {
 
 
 
-    func applicationDidFinishLaunching(aNotification: NSNotification) {
+    func applicationDidFinishLaunching(_ aNotification: Notification) {
         // Insert code here to initialize your application
-        let defaults = ["NSToolTipAutoWrappingDisabled" : NSNumber(bool: true)]
-        NSUserDefaults.standardUserDefaults().registerDefaults(defaults)
+        let defaults = ["NSToolTipAutoWrappingDisabled" : NSNumber(value: true as Bool)]
+        UserDefaults.standard.register(defaults: defaults)
     }
 
-    func applicationWillTerminate(aNotification: NSNotification) {
+    func applicationWillTerminate(_ aNotification: Notification) {
         // Insert code here to tear down your application
     }
     
-    func applicationShouldTerminateAfterLastWindowClosed(sender: NSApplication) -> Bool {
+    func applicationShouldTerminateAfterLastWindowClosed(_ sender: NSApplication) -> Bool {
         return true
     }
 

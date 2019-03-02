@@ -15,7 +15,7 @@ class BluetilityWindowController: NSWindowController {
     override func windowDidLoad() {
         super.windowDidLoad()
         self.shouldCascadeWindows = false
-        window?.setFrameAutosaveName(NSWindow.FrameAutosaveName(rawValue: "bluetility"));
+        window?.setFrameAutosaveName("bluetility");
     
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
     }

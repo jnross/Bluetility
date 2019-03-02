@@ -100,9 +100,9 @@ class ViewController: NSViewController {
             window.makeKeyAndOrderFront(self)
         } else {
             logWindowController?.window?.close()
-            if let logWindowController = self.storyboard?.instantiateController(withIdentifier: NSStoryboard.SceneIdentifier(rawValue: "LogWindow")) as? NSWindowController {
+            if let logWindowController = self.storyboard?.instantiateController(withIdentifier: "LogWindow") as? NSWindowController {
                 logWindowController.shouldCascadeWindows = false
-                logWindowController.window?.setFrameAutosaveName(NSWindow.FrameAutosaveName(rawValue: "bluetility_log"))
+                logWindowController.window?.setFrameAutosaveName("bluetility_log")
                 logWindowController.showWindow(sender)
                 self.logWindowController = logWindowController
                 self.logViewController = logWindowController.contentViewController as? LogViewController
@@ -167,24 +167,13 @@ extension ViewController : NSBrowserDelegate {
         return item
     }
     
-    override func view(_ view: NSView, stringForToolTip tag: NSView.ToolTipTag, point: NSPoint, userData data: UnsafeMutableRawPointer?) -> String {
-        if let row = rowForTooltipTag[tag] {
-            let peripheral = scanner.devices[row]
-            if let advData = scanner.advDataForPeripheral[peripheral] {
-                return tooltipStringForAdvData(advData)
-            }
-            
-        }
-        return ""
-    }
-    
-    func tooltipStringForAdvData(_ advData:[String:AnyObject]) -> String {
+    func tooltipStringForAdvData(_ advData:[String:Any]) -> String {
         var tooltip = ""
         if let mfgData = advData[CBAdvertisementDataManufacturerDataKey] as? Data {
-            tooltip += "Mfg Data:\t\t0x\(hexStringForData(mfgData))\n"
+            tooltip += "Mfg Data:\t\t0x\(mfgData.hexString)\n"
             if mfgData[0] == 0xd9 && mfgData[1] == 0x01 {
                 let uidData = mfgData[6..<14]
-                tooltip += "UID:\t\t\t\(hexStringForData(uidData))\n"
+                tooltip += "UID:\t\t\t\(uidData.hexString)\n"
             }
         }
         if let localName = advData[CBAdvertisementDataLocalNameKey] as? String {
@@ -249,29 +238,29 @@ extension ViewController : NSBrowserDelegate {
     
     @IBAction
     func browserAction(_ sender:NSBrowser) {
-        let indexPath = browser.selectionIndexPath
-        let column = indexPath?.count
-        browser.setTitle(self.browser(browser,titleOfColumn:column!)!, ofColumn: column!)
+        guard let indexPath = browser.selectionIndexPath else { return }
+        let column = indexPath.count
+        browser.setTitle(self.browser(browser,titleOfColumn:column)!, ofColumn: column)
         // Automatically reconnect if a service or characteristic is selected.
-        if [2,3].contains(indexPath?.count) {
+        if [2,3].contains(column) {
             reconnectPeripheral()
         }
-        if indexPath?.count == 1 {
-            let peripheral = scanner.devices[indexPath![0]]
+        if column == 1 {
+            let peripheral = scanner.devices[indexPath[0]]
             if peripheral != connectedPeripheral {
                 statusLabel.string = ""
             }
             selectPeripheral(peripheral)
             reloadColumn(1)
-        } else if indexPath?.count == 2 {
-            if let service = connectedPeripheral?.services?[indexPath![1]] {
+        } else if column == 2 {
+            if let service = connectedPeripheral?.services?[indexPath[1]] {
                 selectedService = service
                 connectedPeripheral?.discoverCharacteristics(nil, for: service)
                 selectedCharacteristic = nil
                 reloadColumn(2)
             }
-        } else if indexPath?.count == 3 {
-            if let characteristic = selectedService?.characteristics?[indexPath![2]] {
+        } else if column == 3 {
+            if let characteristic = selectedService?.characteristics?[indexPath[2]] {
                 selectedCharacteristic = characteristic
                 if characteristic.properties.contains(.read) {
                     readCharacteristic()
@@ -352,14 +341,13 @@ extension ViewController : NSBrowserDelegate {
         case 1:
             var hex:String = ""
             if let value = characteristic.value {
-                hex = hexStringForData(value)
+                hex = value.hexString
             }
             cell.title = "Hex:\t\t" + hex
         case 2:
             if let value = characteristic.value, value.count <= 8 {
-                let dec = value.withUnsafeBytes { (ptr: UnsafePointer<Int64>) -> Int64 in
-                    return ptr.pointee
-                }
+                var dec:Int64 = 0
+                (value as NSData).getBytes(&dec, length: value.count)
                 cell.title = "Decimal:\t\(dec)"
             }
         case 3:
@@ -434,6 +422,20 @@ extension ViewController : NSBrowserDelegate {
     func appendLog(_ message:String) {
         logViewController?.logText.textStorage?.append(NSAttributedString(string:message + "\n"))
         logViewController?.logText.scrollToEndOfDocument(self)
+    }
+}
+
+extension ViewController: NSViewToolTipOwner {
+    
+    func view(_ view: NSView, stringForToolTip tag: NSView.ToolTipTag, point: NSPoint, userData data: UnsafeMutableRawPointer?) -> String {
+        if let row = rowForTooltipTag[tag] {
+            let peripheral = scanner.devices[row]
+            if let advData = scanner.advDataForPeripheral[peripheral] {
+                return tooltipStringForAdvData(advData)
+            }
+            
+        }
+        return ""
     }
 }
 

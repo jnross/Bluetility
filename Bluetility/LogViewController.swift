@@ -30,7 +30,7 @@ class LogViewController: NSViewController {
     
     fileprivate func appendCharacteristicOperation(_ characteristic:CBCharacteristic, operationType:OperationType, data: Data? = nil) {
         let data = data ?? characteristic.value ?? Data()
-        let hexString = hexStringForData(data)
+        let hexString = data.hexString
         appendLogText("UUID \(characteristic.uuid.uuidString) \(operationType) Value: 0x\(hexString)")
         let logEntry = LogEntry(serviceUUID: characteristic.service.uuid.uuidString,
             charUUID: characteristic.uuid.uuidString,

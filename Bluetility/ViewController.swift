@@ -419,12 +419,15 @@ extension ViewController : NSBrowserDelegate {
     func writeDataToSelectedCharacteristic(_ data:Data) {
         log("writing data \(data)")
         if let characteristic = selectedCharacteristic {
-                var writeType = CBCharacteristicWriteType.withResponse
-                if (!characteristic.properties.contains(.write)) {
-                    writeType = .withoutResponse
-                }
-                
-                connectedPeripheral?.writeValue(data, for: characteristic, type: writeType)
+            var writeType = CBCharacteristicWriteType.withResponse
+            if (!characteristic.properties.contains(.write)) {
+                writeType = .withoutResponse
+            }
+            
+            
+            connectedPeripheral?.writeValue(data, for: characteristic, type: writeType)
+            
+            logViewController?.appendWrite(characteristic, data: data)
         }
     }
     
@@ -505,6 +508,6 @@ extension ViewController : CBPeripheralDelegate {
     }
     
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        logViewController?.appendWrite(characteristic)
+        // TODO: log error
     }
 }

@@ -24,12 +24,12 @@ class LogViewController: NSViewController {
         appendCharacteristicOperation(characteristic, operationType: .Read)
     }
     
-    func appendWrite(_ characteristic:CBCharacteristic) {
-        appendCharacteristicOperation(characteristic, operationType: .Write)
+    func appendWrite(_ characteristic:CBCharacteristic, data: Data) {
+        appendCharacteristicOperation(characteristic, operationType: .Write, data: data)
     }
     
-    fileprivate func appendCharacteristicOperation(_ characteristic:CBCharacteristic, operationType:OperationType) {
-        let data = characteristic.value ?? Data()
+    fileprivate func appendCharacteristicOperation(_ characteristic:CBCharacteristic, operationType:OperationType, data: Data? = nil) {
+        let data = data ?? characteristic.value ?? Data()
         let hexString = hexStringForData(data)
         appendLogText("UUID \(characteristic.uuid.uuidString) \(operationType) Value: 0x\(hexString)")
         let logEntry = LogEntry(serviceUUID: characteristic.service.uuid.uuidString,
@@ -42,7 +42,7 @@ class LogViewController: NSViewController {
     }
     
     func appendLogText(_ message:String) {
-        logText.textStorage?.append(NSAttributedString(string:message + "\n"))
+        logText.string.append(message + "\n")
         logText.scrollToEndOfDocument(self)
     }
     

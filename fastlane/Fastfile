@@ -1,0 +1,42 @@
+# This file contains the fastlane.tools configuration
+# You can find the documentation at https://docs.fastlane.tools
+#
+# For a list of all available actions, check out
+#
+#     https://docs.fastlane.tools/actions
+#
+# For a list of all available plugins, check out
+#
+#     https://docs.fastlane.tools/plugins/available-plugins
+#
+
+# Uncomment the line if you want fastlane to automatically update itself
+# update_fastlane
+
+default_platform(:mac)
+
+platform :mac do
+    lane :prepare_minor_version do
+        increment_version_number(
+            bump_type: "minor"
+        )
+        commit_version_bump(
+            include: "Bluetility/Info.plist"
+        )
+    end
+
+    desc "Increments the build number, builds, and notarizes the Release configuration of the app."
+    lane :build_release do
+        ensure_git_status_clean
+        increment_build_number
+        gym(
+            scheme: "Bluetility"
+        )
+        app_path = "build/Bluetility.app"
+        notarize(package: app_path)
+        commit_version_bump(
+            include: "Bluetility/Info.plist"
+        )
+        push_to_git_remote
+    end
+end

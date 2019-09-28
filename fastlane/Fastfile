@@ -40,7 +40,7 @@ platform :mac do
         ensure_git_status_clean
         increment_build_number
         gym(
-            scheme: "Bluetility"
+            scheme: "Bluetility Release"
         )
         app_path = "build/Bluetility.app"
         notarize(package: app_path)

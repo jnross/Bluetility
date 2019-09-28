@@ -25,6 +25,16 @@ platform :mac do
         )
     end
 
+
+    lane :prepare_bugfix_version do
+        increment_version_number(
+            bump_type: "patch"
+        )
+        commit_version_bump(
+            include: "Bluetility/Info.plist"
+        )
+    end
+
     desc "Increments the build number, builds, and notarizes the Release configuration of the app."
     lane :build_release do
         ensure_git_status_clean

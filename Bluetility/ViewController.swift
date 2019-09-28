@@ -381,13 +381,19 @@ extension ViewController : NSBrowserDelegate {
     func hexEntered(_ textField:NSTextField) {
         var bytes = [UInt8]()
         let text = textField.stringValue
+        if text.count % 2 != 0 {
+            textField.shake()
+            return
+        }
         var i = text.startIndex
         while i < text.endIndex {
-            //TODO: protect against badly formed strings
             let nextIndex = text.index(i, offsetBy: 2)
             let hexByte = text[i ..< nextIndex]
             if let byte:UInt8 = UInt8(hexByte, radix:16) {
                 bytes.append(byte)
+            } else {
+                textField.shake()
+                return
             }
             i = nextIndex
         }

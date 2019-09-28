@@ -17,6 +17,7 @@
 		3769BDE41C32FB0D004C089D /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769BDE31C32FB0D004C089D /* LogViewController.swift */; };
 		3769BDE61C3338DF004C089D /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769BDE51C3338DF004C089D /* StringUtils.swift */; };
 		37F9CCD51C21D856003580CB /* PasteboardBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F9CCD41C21D856003580CB /* PasteboardBrowser.swift */; };
+		505C6E80233FC8C400ABC0A3 /* NSTextField+Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505C6E7F233FC8C400ABC0A3 /* NSTextField+Shake.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -32,6 +33,7 @@
 		3769BDE31C32FB0D004C089D /* LogViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LogViewController.swift; sourceTree = "<group>"; };
 		3769BDE51C3338DF004C089D /* StringUtils.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StringUtils.swift; sourceTree = "<group>"; };
 		37F9CCD41C21D856003580CB /* PasteboardBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasteboardBrowser.swift; sourceTree = "<group>"; };
+		505C6E7F233FC8C400ABC0A3 /* NSTextField+Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Shake.swift"; sourceTree = "<group>"; };
 		D82AF517222AF834005D80D1 /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -77,6 +79,7 @@
 				3769BDDF1C308814004C089D /* Credits.html */,
 				3769BDE31C32FB0D004C089D /* LogViewController.swift */,
 				3769BDE51C3338DF004C089D /* StringUtils.swift */,
+				505C6E7F233FC8C400ABC0A3 /* NSTextField+Shake.swift */,
 			);
 			path = Bluetility;
 			sourceTree = "<group>";
@@ -108,11 +111,12 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 0710;
-				LastUpgradeCheck = 0940;
+				LastUpgradeCheck = 1010;
 				ORGANIZATIONNAME = "Joseph Ross";
 				TargetAttributes = {
 					374931861BF169C90087E39F = {
 						CreatedOnToolsVersion = 7.1;
+						DevelopmentTeam = PTE4TYXPW2;
 						LastSwiftMigration = 0940;
 						SystemCapabilities = {
 							com.apple.HardenedRuntime = {
@@ -161,6 +165,7 @@
 				3749319A1BF16D980087E39F /* BluetilityWindowController.swift in Sources */,
 				3749318D1BF169C90087E39F /* ViewController.swift in Sources */,
 				37F9CCD51C21D856003580CB /* PasteboardBrowser.swift in Sources */,
+				505C6E80233FC8C400ABC0A3 /* NSTextField+Shake.swift in Sources */,
 				3769BDE41C32FB0D004C089D /* LogViewController.swift in Sources */,
 				3749319C1BF173470087E39F /* Scanner.swift in Sources */,
 				3749318B1BF169C90087E39F /* AppDelegate.swift in Sources */,
@@ -209,7 +214,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -266,7 +270,6 @@
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
-				CODE_SIGN_IDENTITY = "-";
 				COPY_PHASE_STRIP = NO;
 				CURRENT_PROJECT_VERSION = 2;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -294,6 +297,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				COMBINE_HIDPI_IMAGES = YES;
+				DEVELOPMENT_TEAM = PTE4TYXPW2;
 				ENABLE_HARDENED_RUNTIME = YES;
 				INFOPLIST_FILE = Bluetility/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/../Frameworks";

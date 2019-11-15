@@ -43,7 +43,10 @@ platform :mac do
             scheme: "Bluetility Release"
         )
         app_path = "build/Bluetility.app"
-        notarize(package: app_path)
+        notarize(
+          package: app_path,
+          try_early_stapling: true,
+        )
         commit_version_bump(
             include: "Bluetility/Info.plist"
         )

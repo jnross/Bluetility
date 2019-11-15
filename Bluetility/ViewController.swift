@@ -434,14 +434,16 @@ extension ViewController : NSBrowserDelegate {
 extension ViewController: NSViewToolTipOwner {
     
     func view(_ view: NSView, stringForToolTip tag: NSView.ToolTipTag, point: NSPoint, userData data: UnsafeMutableRawPointer?) -> String {
+        var tooltipParts:[String] = []
         if let row = rowForTooltipTag[tag] {
             let peripheral = scanner.devices[row]
+            tooltipParts.append("identifier:\t\t\(peripheral.identifier)")
+            tooltipParts.append("MAC:\t\t\(peripheral.macAddr ?? "-")")
             if let advData = scanner.advDataForPeripheral[peripheral] {
-                return tooltipStringForAdvData(advData)
+                tooltipParts.append(tooltipStringForAdvData(advData))
             }
-            
         }
-        return ""
+        return tooltipParts.joined(separator: "\n")
     }
 }
 

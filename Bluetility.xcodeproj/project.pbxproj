@@ -18,6 +18,7 @@
 		3769BDE61C3338DF004C089D /* StringUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769BDE51C3338DF004C089D /* StringUtils.swift */; };
 		37F9CCD51C21D856003580CB /* PasteboardBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F9CCD41C21D856003580CB /* PasteboardBrowser.swift */; };
 		505C6E80233FC8C400ABC0A3 /* NSTextField+Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505C6E7F233FC8C400ABC0A3 /* NSTextField+Shake.swift */; };
+		D87DC9E5237F2BC800DB176C /* CBPeripheral+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = D87DC9E4237F2BC800DB176C /* CBPeripheral+Extension.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -35,6 +36,7 @@
 		37F9CCD41C21D856003580CB /* PasteboardBrowser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PasteboardBrowser.swift; sourceTree = "<group>"; };
 		505C6E7F233FC8C400ABC0A3 /* NSTextField+Shake.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "NSTextField+Shake.swift"; sourceTree = "<group>"; };
 		D82AF517222AF834005D80D1 /* fastlane */ = {isa = PBXFileReference; lastKnownFileType = folder; path = fastlane; sourceTree = "<group>"; };
+		D87DC9E4237F2BC800DB176C /* CBPeripheral+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBPeripheral+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -80,6 +82,7 @@
 				3769BDE31C32FB0D004C089D /* LogViewController.swift */,
 				3769BDE51C3338DF004C089D /* StringUtils.swift */,
 				505C6E7F233FC8C400ABC0A3 /* NSTextField+Shake.swift */,
+				D87DC9E4237F2BC800DB176C /* CBPeripheral+Extension.swift */,
 			);
 			path = Bluetility;
 			sourceTree = "<group>";
@@ -131,6 +134,7 @@
 			developmentRegion = English;
 			hasScannedForEncodings = 0;
 			knownRegions = (
+				English,
 				en,
 				Base,
 			);
@@ -162,6 +166,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D87DC9E5237F2BC800DB176C /* CBPeripheral+Extension.swift in Sources */,
 				3749319A1BF16D980087E39F /* BluetilityWindowController.swift in Sources */,
 				3749318D1BF169C90087E39F /* ViewController.swift in Sources */,
 				37F9CCD51C21D856003580CB /* PasteboardBrowser.swift in Sources */,
@@ -233,7 +238,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = YES;
 				ONLY_ACTIVE_ARCH = YES;
 				SDKROOT = macosx;
@@ -283,7 +288,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				MACOSX_DEPLOYMENT_TARGET = 10.11;
+				MACOSX_DEPLOYMENT_TARGET = 10.13;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = macosx;
 				SWIFT_COMPILATION_MODE = wholemodule;

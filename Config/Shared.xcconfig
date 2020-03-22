@@ -1,0 +1,22 @@
+
+#include "Warnings.xcconfig"
+
+// Project
+MACOSX_DEPLOYMENT_TARGET = 10.13
+SDKROOT = macosx
+SWIFT_VERSION = 4.2
+VERSIONING_SYSTEM = apple-generic
+COPY_PHASE_STRIP = NO
+
+// Target
+ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon
+CODE_SIGN_STYLE = Manual
+COMBINE_HIDPI_IMAGES = YES
+ENABLE_HARDENED_RUNTIME = YES
+INFOPLIST_FILE = Bluetility/Info.plist
+LD_RUNPATH_SEARCH_PATHS = $(inherited) @executable_path/../Frameworks
+PRODUCT_BUNDLE_IDENTIFIER = com.rossible.Bluetility
+PRODUCT_NAME = $(TARGET_NAME)
+
+// Version
+CURRENT_PROJECT_VERSION = 4

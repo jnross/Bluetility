@@ -1,0 +1,17 @@
+//
+// Release.xcconfig
+//
+// Settings for Release build
+//
+
+#include "Shared.xcconfig"
+
+DEBUG_INFORMATION_FORMAT = dwarf-with-dsym
+ENABLE_NS_ASSERTIONS = NO
+MTL_ENABLE_DEBUG_INFO = NO
+SWIFT_COMPILATION_MODE = wholemodule
+
+CODE_SIGN_IDENTITY = Developer ID Application
+CODE_SIGN_INJECT_BASE_ENTITLEMENTS = NO
+DEVELOPMENT_TEAM = PTE4TYXPW2
+OTHER_CODE_SIGN_FLAGS = --timestamp

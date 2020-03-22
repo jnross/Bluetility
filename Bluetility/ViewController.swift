@@ -397,7 +397,7 @@ extension ViewController : NSBrowserDelegate {
             }
             i = nextIndex
         }
-        let data = Data(bytes: bytes)
+        let data = Data(bytes)
         writeDataToSelectedCharacteristic(data)
         
     }

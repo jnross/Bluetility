@@ -54,7 +54,7 @@ extension Scanner : CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        if devices.index(of: peripheral) == nil {
+        if devices.firstIndex(of: peripheral) == nil {
             devices.append(peripheral)
         }
         rssiForPeripheral[peripheral] = RSSI

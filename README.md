@@ -3,6 +3,12 @@
 Bluetility is a general-purpose Bluetooth Low-Energy utility for Mac OS X.  It scans for advertising peripherals, provides a interface to browse a connected peripheral's services and characteristics, and allows characteristic values to be read, written, and subscribed.
 <img src="bluetility_screenshot.png" alt="Bluetility Screenshot" width="1085"/>
 
+## Installation
+1. Download the latest release:  https://github.com/jnross/Bluetility/releases/latest/download/Bluetility.app.zip
+2. Extract the downloaded archive.
+3. Move Bluetility.app into your /Applications folder.  Or don't!
+4. Open Bluetility.app.
+
 ## Features
 
 * Scan for nearby advertising peripherals

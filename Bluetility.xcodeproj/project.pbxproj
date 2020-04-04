@@ -40,6 +40,7 @@
 		D85908F22427E34700CBECC9 /* Debug.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Debug.xcconfig; sourceTree = "<group>"; };
 		D85908F32427E34700CBECC9 /* Release.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Release.xcconfig; sourceTree = "<group>"; };
 		D85908F42427E34700CBECC9 /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
+		D8789F0E24390B7900B83AA4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D87DC9E4237F2BC800DB176C /* CBPeripheral+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBPeripheral+Extension.swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -57,6 +58,7 @@
 		3749317E1BF169C90087E39F = {
 			isa = PBXGroup;
 			children = (
+				D8789F0E24390B7900B83AA4 /* README.md */,
 				D85908F02427E34700CBECC9 /* Config */,
 				374931891BF169C90087E39F /* Bluetility */,
 				374931881BF169C90087E39F /* Products */,

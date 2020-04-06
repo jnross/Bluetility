@@ -25,6 +25,6 @@ Bluetility is inspired by [LightBlue](https://itunes.apple.com/us/app/lightblue/
 * Support copy/paste via Cmd+C and Cmd+V
 * Sort peripherals by received signal strength
 * View advertising data
-* Automatically reconnect to disconnect peripherals when needed
+* Automatically reconnect to disconnected peripherals when needed
 
 Bluetility is published as open-source so that anyone can tweak or improve its functionality to meet their own needs.

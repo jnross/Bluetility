@@ -20,12 +20,14 @@ platform :mac do
     lane :build_release do
         ensure_git_status_clean
         gym(
-            scheme: "Bluetility Release"
+            scheme: "Bluetility Release",
+            skip_package_pkg: true,
         )
         app_path = "build/Bluetility.app"
         notarize(
           package: app_path,
           try_early_stapling: true,
+          verbose: true,
         )
     end
 end

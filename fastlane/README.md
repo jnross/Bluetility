@@ -16,16 +16,6 @@ or alternatively using `brew cask install fastlane`
 
 # Available Actions
 ## Mac
-### mac prepare_minor_version
-```
-fastlane mac prepare_minor_version
-```
-
-### mac prepare_bugfix_version
-```
-fastlane mac prepare_bugfix_version
-```
-
 ### mac build_release
 ```
 fastlane mac build_release

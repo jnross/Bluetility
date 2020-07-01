@@ -42,6 +42,8 @@
 		D85908F42427E34700CBECC9 /* Warnings.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = Warnings.xcconfig; sourceTree = "<group>"; };
 		D8789F0E24390B7900B83AA4 /* README.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = README.md; sourceTree = "<group>"; };
 		D87DC9E4237F2BC800DB176C /* CBPeripheral+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CBPeripheral+Extension.swift"; sourceTree = "<group>"; };
+		D89F71D024AC084B00861217 /* Gemfile */ = {isa = PBXFileReference; lastKnownFileType = text; path = Gemfile; sourceTree = "<group>"; };
+		D89F71D124AC084B00861217 /* LICENSE.md */ = {isa = PBXFileReference; lastKnownFileType = net.daringfireball.markdown; path = LICENSE.md; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -63,6 +65,8 @@
 				374931891BF169C90087E39F /* Bluetility */,
 				374931881BF169C90087E39F /* Products */,
 				D82AF517222AF834005D80D1 /* fastlane */,
+				D89F71D024AC084B00861217 /* Gemfile */,
+				D89F71D124AC084B00861217 /* LICENSE.md */,
 			);
 			sourceTree = "<group>";
 		};

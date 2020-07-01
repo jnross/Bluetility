@@ -92,7 +92,7 @@ class ViewController: NSViewController {
     }
     
     @IBAction func sortPressed(_ sender: AnyObject?) {
-        scanner.devices.sort { return scanner.rssiForPeripheral[$0]?.int32Value ?? 0 > scanner.rssiForPeripheral[$1]?.int32Value ?? 0 }
+        scanner.devices.sort { return $0.rssi > $1.rssi }
     }
     
     @IBAction func logPressed(_ sender: NSToolbarItem) {
@@ -140,8 +140,8 @@ extension ViewController : NSBrowserDelegate {
         guard let cell = cell as? NSBrowserCell else { return }
         switch column {
         case 0:
-            let peripheral = scanner.devices[row]
-            cell.title = (peripheral.name ?? "Untitled") + "(\(scanner.rssiForPeripheral[peripheral] ?? 0))"
+            let device = scanner.devices[row]
+            cell.title = (device.friendlyName) + "(\(device.rssi))"
             let rect = browser.frame(ofRow: row, inColumn: column)
             if tooltipTagForRow[row] == nil {
                 let tag = browser.addToolTip(rect, owner: self, userData: nil)
@@ -246,7 +246,7 @@ extension ViewController : NSBrowserDelegate {
             reconnectPeripheral()
         }
         if column == 1 {
-            let peripheral = scanner.devices[indexPath[0]]
+            let peripheral = scanner.devices[indexPath[0]].peripheral
             if peripheral != connectedPeripheral {
                 statusLabel.string = ""
             }
@@ -436,12 +436,11 @@ extension ViewController: NSViewToolTipOwner {
     func view(_ view: NSView, stringForToolTip tag: NSView.ToolTipTag, point: NSPoint, userData data: UnsafeMutableRawPointer?) -> String {
         var tooltipParts:[String] = []
         if let row = rowForTooltipTag[tag] {
-            let peripheral = scanner.devices[row]
-            tooltipParts.append("identifier:\t\t\(peripheral.identifier)")
-            tooltipParts.append("MAC:\t\t\(peripheral.macAddr ?? "-")")
-            if let advData = scanner.advDataForPeripheral[peripheral] {
-                tooltipParts.append(tooltipStringForAdvData(advData))
-            }
+            let device = scanner.devices[row]
+            tooltipParts.append("identifier:\t\t\(device.peripheral.identifier)")
+            tooltipParts.append("MAC:\t\t\(device.peripheral.macAddr ?? "-")")
+            let advData = device.advertisingData
+            tooltipParts.append(tooltipStringForAdvData(advData))
         }
         return tooltipParts.joined(separator: "\n")
     }
@@ -451,7 +450,8 @@ extension ViewController : IndexPathPasteboardDelegate {
     func pasteboardStringForIndexPath(_ indexPath: IndexPath) -> String? {
         if indexPath.count == 1 {
             let row = indexPath[0]
-            guard let tag = tooltipTagForRow[row], let peripheralName = scanner.devices[row].name else {return nil}
+            guard let tag = tooltipTagForRow[row] else {return nil}
+            let peripheralName = scanner.devices[row].friendlyName
             return "Name:\t\t\t\(peripheralName)\n" + self.view(browser, stringForToolTip: tag, point: NSPoint(), userData: nil)
         }
         return nil

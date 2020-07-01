@@ -12,9 +12,7 @@ class Scanner: NSObject {
     
     var central:CBCentralManager
     weak var delegate:CBCentralManagerDelegate?
-    var devices:[CBPeripheral] = []
-    var rssiForPeripheral:[CBPeripheral:NSNumber] = [:]
-    var advDataForPeripheral:[CBPeripheral:[String:Any]] = [:]
+    var devices:[Device] = []
     var started:Bool = false
     
     override init() {
@@ -54,15 +52,14 @@ extension Scanner : CBCentralManagerDelegate {
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
-        if devices.firstIndex(of: peripheral) == nil {
-            devices.append(peripheral)
+        guard let existingDevice = devices.first(where: { $0.peripheral == peripheral } ) else {
+            let newDevice = Device(peripheral: peripheral, advertisingData: advertisementData, rssi: RSSI.intValue)
+            devices.append(newDevice)
+            return
         }
-        rssiForPeripheral[peripheral] = RSSI
-        if advDataForPeripheral[peripheral] != nil {
-            advDataForPeripheral[peripheral]! += advertisementData
-        } else {
-            advDataForPeripheral[peripheral] = advertisementData
-        }
+        
+        existingDevice.rssi = RSSI.intValue
+        existingDevice.advertisingData += advertisementData
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {

@@ -14,7 +14,7 @@ class ViewController: NSViewController {
     let scanner = Scanner()
     var listUpdateTimer:Timer? = nil
     
-    var connectedPeripheral:CBPeripheral? = nil
+    var selectedDevice:Device? = nil
     var selectedService:CBService? = nil
     var selectedCharacteristic:CBCharacteristic? = nil
     var characteristicUpdatedDate:Date? = nil
@@ -82,10 +82,10 @@ class ViewController: NSViewController {
     }
     
     @IBAction func refreshPressed(_ sender: AnyObject?) {
-        if let peripheral = connectedPeripheral {
-            scanner.central.cancelPeripheralConnection(peripheral)
+        if let device = selectedDevice {
+            device.disconnect()
         }
-        connectedPeripheral = nil
+        selectedDevice = nil
         selectedService = nil
         scanner.restart()
         resetTooltips()
@@ -125,7 +125,7 @@ extension ViewController : NSBrowserDelegate {
     func browser(_ sender: NSBrowser, numberOfRowsInColumn column: Int) -> Int {
         switch column {
         case 0: return scanner.devices.count;
-        case 1: return connectedPeripheral?.services?.count ?? 0
+        case 1: return selectedDevice?.services.count ?? 0
         case 2: return selectedService?.characteristics?.count ?? 0
         case 3: return 4
         default: return 0
@@ -149,7 +149,7 @@ extension ViewController : NSBrowserDelegate {
                 rowForTooltipTag[tag] = row
             }
         case 1:
-            if let service = connectedPeripheral?.services?[row] {
+            if let service = selectedDevice?.services[row] {
                 cell.title = titleForUUID(service.uuid)
             }
         case 2:
@@ -161,10 +161,6 @@ extension ViewController : NSBrowserDelegate {
         default:
             break
         }
-    }
-    
-    func browser(_ browser: NSBrowser, objectValueForItem item: Any?) -> Any? {
-        return item
     }
     
     func tooltipStringForAdvData(_ advData:[String:Any]) -> String {
@@ -223,18 +219,17 @@ extension ViewController : NSBrowserDelegate {
         return suggestedWidth
     }
     
-    func selectPeripheral(_ peripheral:CBPeripheral) {
-        if peripheral != connectedPeripheral {
-            connectPeripheral(peripheral)
+    func selectDevice(_ device: Device) {
+        if device != selectedDevice {
+            selectedDevice?.disconnect()
+            selectedDevice?.delegate = nil
+            device.delegate = self
+            device.connect()
+            selectedDevice = device
+            scanner.stop()
         }
     }
     
-    func connectPeripheral (_ peripheral:CBPeripheral) {
-        self.connectedPeripheral = peripheral
-        peripheral.delegate = self
-        scanner.central.connect(peripheral, options: [:])
-        scanner.stop()
-    }
     
     @IBAction
     func browserAction(_ sender:NSBrowser) {
@@ -246,16 +241,16 @@ extension ViewController : NSBrowserDelegate {
             reconnectPeripheral()
         }
         if column == 1 {
-            let peripheral = scanner.devices[indexPath[0]].peripheral
-            if peripheral != connectedPeripheral {
+            let device = scanner.devices[indexPath[0]]
+            if device != selectedDevice {
                 statusLabel.string = ""
             }
-            selectPeripheral(peripheral)
+            selectDevice(device)
             reloadColumn(1)
         } else if column == 2 {
-            if let service = connectedPeripheral?.services?[indexPath[1]] {
+            if let service = selectedDevice?.services[indexPath[1]] {
                 selectedService = service
-                connectedPeripheral?.discoverCharacteristics(nil, for: service)
+                selectedDevice?.discoverCharacteristics(for: service)
                 selectedCharacteristic = nil
                 reloadColumn(2)
             }
@@ -273,8 +268,8 @@ extension ViewController : NSBrowserDelegate {
     }
     
     func reconnectPeripheral() {
-        if let connectedPeripheral = connectedPeripheral, connectedPeripheral.state != .connected {
-            scanner.central.connect(connectedPeripheral, options: [:])
+        if let device = selectedDevice, device.peripheral.state != .connected {
+            device.connect()
         }
     }
     
@@ -361,7 +356,7 @@ extension ViewController : NSBrowserDelegate {
     
     func readCharacteristic() {
         if let characteristic = selectedCharacteristic, characteristic.properties.contains(.read) {
-            connectedPeripheral?.readValue(for: characteristic)
+            selectedDevice?.read(characteristic: characteristic)
         }
     }
     
@@ -373,7 +368,7 @@ extension ViewController : NSBrowserDelegate {
     @IBAction
     func subscribeButtonPressed(_ button:NSButton) {
         if let characteristic = selectedCharacteristic {
-            connectedPeripheral?.setNotifyValue(true, for: characteristic)
+            selectedDevice?.setNotify(true, for: characteristic)
         }
     }
     
@@ -419,7 +414,7 @@ extension ViewController : NSBrowserDelegate {
             }
             
             
-            connectedPeripheral?.writeValue(data, for: characteristic, type: writeType)
+            selectedDevice?.write(data: data, for: characteristic, type: writeType)
             
             logViewController?.appendWrite(characteristic, data: data)
         }
@@ -458,49 +453,51 @@ extension ViewController : IndexPathPasteboardDelegate {
     }
 }
 
-extension ViewController : CBCentralManagerDelegate {
-    func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        statusLabel.string = (peripheral.name ?? "") + ":\n connected"
-        peripheral.discoverServices(nil)
+extension ViewController : ScannerDelegate {
+    func scanner(_ scanner: Scanner, didUpdateDevices: [Device]) {
+        // TODO: Do we need to do anything?
+    }
+}
+
+extension ViewController : DeviceDelegate {
+    func deviceDidConnect(_ device: Device) {
+        statusLabel.string = "\(device.friendlyName):\n connected"
     }
     
-    func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        if let connectedPeripheral = connectedPeripheral {
-            statusLabel.string = (connectedPeripheral.name ?? "") + ":\n disconnected"
-        } else {
-            statusLabel.string = ""
+    func deviceDidDisconnect(_ device: Device) {
+        if selectedDevice == device {
+            statusLabel.string = "\(device.friendlyName):\n disconnected"
         }
     }
     
-    func centralManagerDidUpdateState(_ central: CBCentralManager) {}
-}
-
-
-extension ViewController : CBPeripheralDelegate {
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
+    func deviceDidUpdateName(_ device: Device) {
+        // TODO: refresh device cell
+    }
+    
+    func device(_ device: Device, updated services: [CBService]) {
         reloadColumn(1)
         if browser.selectionIndexPath?.count == 2 {
             browserAction(browser)
-        } else if let services = peripheral.services {
+        } else {
             for service in services {
                 if service.uuid == selectedService?.uuid {
                     selectedService = service
-                    peripheral.discoverCharacteristics(nil, for: service)
+                    device.discoverCharacteristics(for: service)
                 }
             }
         }
     }
     
-    func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
+    func device(_ device: Device, updated characteristics: [CBCharacteristic], for service: CBService) {
         reloadColumn(2)
         if browser.selectionIndexPath?.count == 3 {
             browserAction(browser)
-        } else if let characteristics = service.characteristics {
+        } else  {
             for characteristic in characteristics {
                 if characteristic.uuid == selectedCharacteristic?.uuid {
                     selectedCharacteristic = characteristic
                     if characteristic.properties.contains(.read) {
-                        readCharacteristic()
+                        device.read(characteristic: characteristic)
                         
                     }
                     refreshCharacteristicDetail()
@@ -509,15 +506,11 @@ extension ViewController : CBPeripheralDelegate {
         }
     }
     
-    func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
+    func device(_ device: Device, updatedValueFor characteristic: CBCharacteristic) {
         logViewController?.appendRead(characteristic)
         if characteristic == selectedCharacteristic {
             characteristicUpdatedDate = Date()
             refreshCharacteristicDetail()
         }
-    }
-    
-    func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
-        // TODO: log error
     }
 }

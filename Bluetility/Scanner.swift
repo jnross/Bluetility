@@ -8,10 +8,14 @@
 
 import CoreBluetooth;
 
+protocol ScannerDelegate: class {
+    func scanner(_ scanner: Scanner, didUpdateDevices: [Device])
+}
+
 class Scanner: NSObject {
     
     var central:CBCentralManager
-    weak var delegate:CBCentralManagerDelegate?
+    weak var delegate:ScannerDelegate? = nil
     var devices:[Device] = []
     var started:Bool = false
     
@@ -24,10 +28,10 @@ class Scanner: NSObject {
     func start() {
         started = true
         devices = []
-        startOpportunity()
+        startIfReady()
     }
     
-    func startOpportunity() {
+    func startIfReady() {
         if central.state == .poweredOn && started {
             central.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey:false])
         }
@@ -48,37 +52,32 @@ class Scanner: NSObject {
 extension Scanner : CBCentralManagerDelegate {
     
     func centralManagerDidUpdateState(_ central: CBCentralManager) {
-        startOpportunity()
+        startIfReady()
     }
     
     func centralManager(_ central: CBCentralManager, didDiscover peripheral: CBPeripheral, advertisementData: [String : Any], rssi RSSI: NSNumber) {
         guard let existingDevice = devices.first(where: { $0.peripheral == peripheral } ) else {
-            let newDevice = Device(peripheral: peripheral, advertisingData: advertisementData, rssi: RSSI.intValue)
+            let newDevice = Device(scanner: self, peripheral: peripheral, advertisingData: advertisementData, rssi: RSSI.intValue)
             devices.append(newDevice)
             return
         }
         
         existingDevice.rssi = RSSI.intValue
         existingDevice.advertisingData += advertisementData
+        
+        delegate?.scanner(self, didUpdateDevices: devices)
     }
     
     func centralManager(_ central: CBCentralManager, didConnect peripheral: CBPeripheral) {
-        delegate?.centralManager?(central, didConnect: peripheral)
+        guard let device = devices.first(where:{ $0.peripheral == peripheral }) else { return }
+        device.peripheralDidConnect()
     }
     
     func centralManager(_ central: CBCentralManager, didDisconnectPeripheral peripheral: CBPeripheral, error: Error?) {
-        delegate?.centralManager?(central, didDisconnectPeripheral: peripheral, error: error)
-    }
-}
-
-func += <KeyType, ValueType> (left: inout Dictionary<KeyType, ValueType>, right: Dictionary<KeyType, ValueType>) {
-    for (k, v) in right {
-        left.updateValue(v, forKey: k)
+        guard let device = devices.first(where:{ $0.peripheral == peripheral }) else { return }
+        device.peripheralDidDisconnect(error: error)
     }
 }
 
 
-func log(_ message:String, file:String = #file, line:Int = #line, functionName:String = #function) {
-    print("\(file):\(line) (\(functionName)): \(message)\n")
-    
-}
+

@@ -39,8 +39,7 @@ class ViewController: NSViewController {
         // Do any additional setup after loading the view.
         scanner.delegate = self
         scanner.start()
-        listUpdateTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(ViewController.listUpdateTimerFired), userInfo: nil, repeats: true)
-        
+        restartListUpdateTimer()
         dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss.SSS"
         browser.separatesColumns = false
     }
@@ -74,11 +73,10 @@ class ViewController: NSViewController {
     override func viewDidAppear() {
         super.viewDidAppear()
     }
-
-    override var representedObject: Any? {
-        didSet {
-        // Update the view, if already loaded.
-        }
+    
+    func restartListUpdateTimer() {
+        listUpdateTimer?.invalidate()
+        listUpdateTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(ViewController.listUpdateTimerFired), userInfo: nil, repeats: true)
     }
     
     @IBAction func refreshPressed(_ sender: AnyObject?) {
@@ -88,6 +86,7 @@ class ViewController: NSViewController {
         selectedDevice = nil
         selectedService = nil
         scanner.restart()
+        restartListUpdateTimer()
         resetTooltips()
     }
     
@@ -227,6 +226,7 @@ extension ViewController : NSBrowserDelegate {
             device.connect()
             selectedDevice = device
             scanner.stop()
+            listUpdateTimer?.invalidate()
         }
     }
     
@@ -471,7 +471,8 @@ extension ViewController : DeviceDelegate {
     }
     
     func deviceDidUpdateName(_ device: Device) {
-        // TODO: refresh device cell
+        guard let deviceIndex = scanner.devices.firstIndex(of: device) else { return }
+        browser.reloadData(forRowIndexes: IndexSet(integer: deviceIndex), inColumn: 0)
     }
     
     func device(_ device: Device, updated services: [CBService]) {

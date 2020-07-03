@@ -31,7 +31,7 @@ class Scanner: NSObject {
         startIfReady()
     }
     
-    func startIfReady() {
+    private func startIfReady() {
         if central.state == .poweredOn && started {
             central.scanForPeripherals(withServices: nil, options: [CBCentralManagerScanOptionAllowDuplicatesKey:false])
         }

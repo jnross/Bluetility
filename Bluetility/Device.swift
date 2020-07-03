@@ -105,13 +105,9 @@ extension Device : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let error = error {
             // TODO: report an error?
-            assertionFailure()
+            assertionFailure(error.localizedDescription)
         }
-        guard let services = peripheral.services else {
-            // TODO: report an error?
-            assertionFailure()
-            return
-        }
+        let services = peripheral.services ?? []
         
         handleSpecialServices(services)
         
@@ -121,13 +117,9 @@ extension Device : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let error = error {
             // TODO: report an error?
-            assertionFailure()
+            assertionFailure(error.localizedDescription)
         }
-        guard let characteristics = service.characteristics else {
-            // TODO: report an error?
-            assertionFailure()
-            return
-        }
+        let characteristics = service.characteristics ?? []
         
         handleSpecialCharacteristics(characteristics)
         
@@ -137,7 +129,7 @@ extension Device : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
             // TODO: report an error?
-            assertionFailure()
+            assertionFailure(error.localizedDescription)
         }
         
         handleSpecialCharacteristic(characteristic)
@@ -147,7 +139,7 @@ extension Device : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
             // TODO: report an error?
-            assertionFailure()
+            assertionFailure(error.localizedDescription)
         }
         // TODO: report successful write?
     }
@@ -187,17 +179,18 @@ extension Device {
     }
     
     func handleSpecialCharacteristic(_ characteristic: CBCharacteristic) {
-//        guard let value = characteristic.value else { return }
-//        
-//        if specialCharacteristicUUIDs.contains(characteristic.uuid) {
-//            switch characteristic.uuid {
-//            case manufacturerNameUUID:
-//                manufacturerName = String(bytes: value, encoding: .utf8)
-//            case modelNumberUUID:
-//                modelName = String(bytes: value, encoding: .utf8)
-//            default:
-//                assertionFailure("Forgot to handle one of the UUIDs in specialCharacteristicUUIDs: \(characteristic.uuid)")
-//            }
-//        }
+        guard let value = characteristic.value else { return }
+        
+        if specialCharacteristicUUIDs.contains(characteristic.uuid) {
+            switch characteristic.uuid {
+            case manufacturerNameUUID:
+                manufacturerName = String(bytes: value, encoding: .utf8)
+            case modelNumberUUID:
+                modelName = String(bytes: value, encoding: .utf8)
+            default:
+                assertionFailure("Forgot to handle one of the UUIDs in specialCharacteristicUUIDs: \(characteristic.uuid)")
+            }
+            delegate?.deviceDidUpdateName(self)
+        }
     }
 }

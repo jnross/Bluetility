@@ -13,12 +13,6 @@ protocol IndexPathPasteboardDelegate {
 }
 
 class PasteboardBrowser: NSBrowser {
-
-    override func draw(_ dirtyRect: NSRect) {
-        super.draw(dirtyRect)
-
-        // Drawing code here.
-    }
     
     @IBAction
     func copy(_ sender:AnyObject) {
@@ -33,6 +27,13 @@ class PasteboardBrowser: NSBrowser {
         let pb = NSPasteboard.general
         pb.declareTypes([.string], owner: self)
         pb.setString(pasteString, forType: .string)
+    }
+    
+    override func reloadData(forRowIndexes rowIndexes: IndexSet, inColumn column: Int) {
+        for rowIndex in rowIndexes {
+            guard let cell = loadedCell(atRow: rowIndex, column: column) else { continue }
+            delegate?.browser?(self, willDisplayCell: cell, atRow: rowIndex, column: column)
+        }
     }
     
 }

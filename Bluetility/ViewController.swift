@@ -12,7 +12,6 @@ import CoreBluetooth
 class ViewController: NSViewController {
     
     let scanner = Scanner()
-    var listUpdateTimer:Timer? = nil
     
     var selectedDevice:Device? = nil
     var selectedService:CBService? = nil
@@ -39,7 +38,6 @@ class ViewController: NSViewController {
         // Do any additional setup after loading the view.
         scanner.delegate = self
         scanner.start()
-        restartListUpdateTimer()
         dateFormatter.dateFormat = "yyyy/MM/dd HH:mm:ss.SSS"
         browser.separatesColumns = false
     }
@@ -74,11 +72,6 @@ class ViewController: NSViewController {
         super.viewDidAppear()
     }
     
-    func restartListUpdateTimer() {
-        listUpdateTimer?.invalidate()
-        listUpdateTimer = Timer.scheduledTimer(timeInterval: 0.5, target: self, selector: #selector(ViewController.listUpdateTimerFired), userInfo: nil, repeats: true)
-    }
-    
     @IBAction func refreshPressed(_ sender: AnyObject?) {
         if let device = selectedDevice {
             device.disconnect()
@@ -86,12 +79,12 @@ class ViewController: NSViewController {
         selectedDevice = nil
         selectedService = nil
         scanner.restart()
-        restartListUpdateTimer()
         resetTooltips()
     }
     
     @IBAction func sortPressed(_ sender: AnyObject?) {
         scanner.devices.sort { return $0.rssi > $1.rssi }
+        reloadColumn(0)
     }
     
     @IBAction func logPressed(_ sender: NSToolbarItem) {
@@ -107,10 +100,6 @@ class ViewController: NSViewController {
                 self.logViewController = logWindowController.contentViewController as? LogViewController
             }
         }
-    }
-    
-    @objc func listUpdateTimerFired() {
-        reloadColumn(0)
     }
     
     func resetTooltips() {
@@ -226,7 +215,6 @@ extension ViewController : NSBrowserDelegate {
             device.connect()
             selectedDevice = device
             scanner.stop()
-            listUpdateTimer?.invalidate()
         }
     }
     
@@ -461,7 +449,7 @@ extension ViewController : IndexPathPasteboardDelegate {
 
 extension ViewController : ScannerDelegate {
     func scanner(_ scanner: Scanner, didUpdateDevices: [Device]) {
-        // TODO: Do we need to do anything?
+        reloadColumn(0)
     }
 }
 

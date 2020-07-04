@@ -424,6 +424,12 @@ extension ViewController : NSBrowserDelegate {
         logViewController?.logText.textStorage?.append(NSAttributedString(string:message + "\n"))
         logViewController?.logText.scrollToEndOfDocument(self)
     }
+    
+    func updateStatusLabel(for device: Device) {
+        if device == selectedDevice {
+            statusLabel.string = "\(device.friendlyName):\n \(device.peripheral.state == .connected ? "connected" : "disconnected")"
+        }
+    }
 }
 
 extension ViewController: NSViewToolTipOwner {
@@ -461,16 +467,15 @@ extension ViewController : ScannerDelegate {
 
 extension ViewController : DeviceDelegate {
     func deviceDidConnect(_ device: Device) {
-        statusLabel.string = "\(device.friendlyName):\n connected"
+        updateStatusLabel(for: device)
     }
     
     func deviceDidDisconnect(_ device: Device) {
-        if selectedDevice == device {
-            statusLabel.string = "\(device.friendlyName):\n disconnected"
-        }
+        updateStatusLabel(for: device)
     }
     
     func deviceDidUpdateName(_ device: Device) {
+        updateStatusLabel(for: device)
         guard let deviceIndex = scanner.devices.firstIndex(of: device) else { return }
         browser.reloadData(forRowIndexes: IndexSet(integer: deviceIndex), inColumn: 0)
     }

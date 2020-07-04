@@ -8,9 +8,9 @@
 
 import Cocoa
 
-protocol IndexPathPasteboardDelegate {
-    func pasteboardStringForIndexPath(_ indexPath:IndexPath) -> String?
-    func menu(for cell: NSBrowserCell, at indexPath: IndexPath) -> NSMenu?
+protocol PasteboardBrowserDelegate {
+    func browser(_ browser: PasteboardBrowser, pasteboardStringFor indexPath: IndexPath) -> String?
+    func browser(_ browser: PasteboardBrowser, menuFor cell: NSBrowserCell, atRow row: Int, column: Int) -> NSMenu?
 }
 
 class PasteboardBrowser: NSBrowser {
@@ -18,10 +18,10 @@ class PasteboardBrowser: NSBrowser {
     @IBAction
     func copy(_ sender:AnyObject) {
         var string:String? = nil
-        if  let pasteboardDelegate = self.delegate as? IndexPathPasteboardDelegate,
+        if  let pasteboardDelegate = self.delegate as? PasteboardBrowserDelegate,
             let indexPath = self.selectionIndexPath
         {
-            string = pasteboardDelegate.pasteboardStringForIndexPath(indexPath)
+            string = pasteboardDelegate.browser(self, pasteboardStringFor: indexPath)
         }
         if string == nil {
             string = (self.selectedCell() as? NSBrowserCell)?.title
@@ -49,12 +49,11 @@ class PasteboardBrowser: NSBrowser {
         
         guard
             let cell = selectedCell() as? NSBrowserCell,
-            let indexPath = selectionIndexPath,
-            let delegate = delegate as? IndexPathPasteboardDelegate
+            let delegate = delegate as? PasteboardBrowserDelegate
         else {
            return nil
         }
-        return delegate.menu(for: cell, at: indexPath)
+        return delegate.browser(self, menuFor: cell, atRow: row, column: column)
     }
     
 }

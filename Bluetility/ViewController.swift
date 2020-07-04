@@ -439,8 +439,8 @@ extension ViewController: NSViewToolTipOwner {
     }
 }
 
-extension ViewController : IndexPathPasteboardDelegate {
-    func pasteboardStringForIndexPath(_ indexPath: IndexPath) -> String? {
+extension ViewController : PasteboardBrowserDelegate {
+    func browser(_ browser: PasteboardBrowser, pasteboardStringFor indexPath: IndexPath) -> String? {
         if indexPath.count == 1 {
             let row = indexPath[0]
             guard let tag = tooltipTagForRow[row] else {return nil}
@@ -450,20 +450,20 @@ extension ViewController : IndexPathPasteboardDelegate {
         return nil
     }
     
-    func menu(for cell: NSBrowserCell, at indexPath: IndexPath) -> NSMenu? {
+    func browser(_ browser: PasteboardBrowser, menuFor cell: NSBrowserCell, atRow row: Int, column: Int) -> NSMenu? {
         let menu = NSMenu()
         let copyItem = NSMenuItem(title: "Copy", action: #selector(copyCellContents(sender:)), keyEquivalent: "")
         menu.addItem(copyItem)
         
-        if indexPath.count == 1 {
+        if column == 0 {
             if selectedDevice?.peripheral.macAddr != nil {
                 menu.addItem(NSMenuItem(title: "Copy MAC Address", action: #selector(copyDeviceMAC(sender:)), keyEquivalent: ""))
             }
             menu.addItem(NSMenuItem(title: "Copy Device Identifier", action: #selector(copyDeviceIdentifier(sender:)), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "Copy Device Tooltip", action: #selector(copyDeviceTooltip(sender:)), keyEquivalent: ""))
-        } else if indexPath.count == 2 {
+        } else if column == 1 {
             menu.addItem(NSMenuItem(title: "Copy Service UUID", action: #selector(copyServiceUUID(sender:)), keyEquivalent: ""))
-        } else if indexPath.count == 3 {
+        } else if column == 2 {
             menu.addItem(NSMenuItem(title: "Copy Characteristic UUID", action: #selector(copyCharacteristicUUID(sender:)), keyEquivalent: ""))
         }
         

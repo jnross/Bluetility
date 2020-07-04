@@ -422,14 +422,19 @@ extension ViewController : NSBrowserDelegate {
 extension ViewController: NSViewToolTipOwner {
     
     func view(_ view: NSView, stringForToolTip tag: NSView.ToolTipTag, point: NSPoint, userData data: UnsafeMutableRawPointer?) -> String {
-        var tooltipParts:[String] = []
         if let row = rowForTooltipTag[tag] {
             let device = scanner.devices[row]
-            tooltipParts.append("identifier:\t\t\(device.peripheral.identifier)")
-            tooltipParts.append("MAC:\t\t\(device.peripheral.macAddr ?? "-")")
-            let advData = device.advertisingData
-            tooltipParts.append(tooltipStringForAdvData(advData))
+            return tooltip(for: device)
         }
+        return ""
+    }
+    
+    func tooltip(for device: Device) -> String {
+        var tooltipParts:[String] = []
+        tooltipParts.append("identifier:\t\t\(device.peripheral.identifier)")
+        tooltipParts.append("MAC:\t\t\(device.peripheral.macAddr ?? "-")")
+        let advData = device.advertisingData
+        tooltipParts.append(tooltipStringForAdvData(advData))
         return tooltipParts.joined(separator: "\n")
     }
 }
@@ -443,6 +448,75 @@ extension ViewController : IndexPathPasteboardDelegate {
             return "Name:\t\t\t\(peripheralName)\n" + self.view(browser, stringForToolTip: tag, point: NSPoint(), userData: nil)
         }
         return nil
+    }
+    
+    func menu(for cell: NSBrowserCell, at indexPath: IndexPath) -> NSMenu? {
+        let menu = NSMenu()
+        let copyItem = NSMenuItem(title: "Copy", action: #selector(copyCellContents(sender:)), keyEquivalent: "")
+        menu.addItem(copyItem)
+        
+        if indexPath.count == 1 {
+            if selectedDevice?.peripheral.macAddr != nil {
+                menu.addItem(NSMenuItem(title: "Copy MAC Address", action: #selector(copyDeviceMAC(sender:)), keyEquivalent: ""))
+            }
+            menu.addItem(NSMenuItem(title: "Copy Device Identifier", action: #selector(copyDeviceIdentifier(sender:)), keyEquivalent: ""))
+            menu.addItem(NSMenuItem(title: "Copy Device Tooltip", action: #selector(copyDeviceTooltip(sender:)), keyEquivalent: ""))
+        } else if indexPath.count == 2 {
+            menu.addItem(NSMenuItem(title: "Copy Service UUID", action: #selector(copyServiceUUID(sender:)), keyEquivalent: ""))
+        } else if indexPath.count == 3 {
+            menu.addItem(NSMenuItem(title: "Copy Characteristic UUID", action: #selector(copyCharacteristicUUID(sender:)), keyEquivalent: ""))
+        }
+        
+        return menu
+    }
+    
+    @IBAction
+    func copyCellContents(sender: Any) {
+        guard let cell = browser.selectedCell() as? NSBrowserCell else { return }
+        
+        putPasteboardString(cell.title)
+    }
+    
+    @IBAction
+    func copyDeviceMAC(sender: Any) {
+        guard let macAddressString = selectedDevice?.peripheral.macAddr else { return }
+        
+        putPasteboardString(macAddressString)
+    }
+    
+    @IBAction
+    func copyDeviceIdentifier(sender: Any) {
+        guard let deviceIdentifier = selectedDevice?.peripheral.identifier else { return }
+        
+        putPasteboardString(deviceIdentifier.uuidString)
+    }
+    
+    @IBAction
+    func copyDeviceTooltip(sender: Any) {
+        guard let device = selectedDevice else { return }
+        
+        putPasteboardString(tooltip(for: device))
+    }
+    
+    @IBAction
+    func copyServiceUUID(sender: Any) {
+        guard let serviceUUID = selectedService?.uuid else { return }
+        
+        putPasteboardString(serviceUUID.uuidString)
+    }
+    
+    @IBAction
+    func copyCharacteristicUUID(sender: Any) {
+        guard let characteristicUUID = selectedCharacteristic?.uuid else { return }
+        
+        putPasteboardString(characteristicUUID.uuidString)
+    }
+    
+    
+    private func putPasteboardString(_ string: String) {
+        let pb = NSPasteboard.general
+        pb.declareTypes([.string], owner: self)
+        pb.setString(string, forType: .string)
     }
 }
 

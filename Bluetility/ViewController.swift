@@ -214,7 +214,6 @@ extension ViewController : NSBrowserDelegate {
             device.delegate = self
             device.connect()
             selectedDevice = device
-            scanner.stop()
         }
     }
     
@@ -306,11 +305,11 @@ extension ViewController : NSBrowserDelegate {
     }
     
     func reloadColumn(_ column: Int) {
-        browser.reloadColumn(column)
         for row in 0..<browser(browser, numberOfRowsInColumn: column) {
             guard let cell = browser.loadedCell(atRow: row, column: column) as? NSBrowserCell else { continue }
             browser(browser, willDisplayCell: cell, atRow: row, column: column)
         }
+        browser.reloadColumn(column)
     }
     
     func setupCharacteristicDetailCell(_ cell:NSBrowserCell, forRow row:Int) {

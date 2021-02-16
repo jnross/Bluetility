@@ -240,6 +240,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D85908F22427E34700CBECC9 /* Debug.xcconfig */;
 			buildSettings = {
+				CODE_SIGN_IDENTITY = "-";
 			};
 			name = Debug;
 		};

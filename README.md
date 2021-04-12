@@ -13,7 +13,7 @@ Bluetility is a general-purpose Bluetooth Low-Energy utility for Mac OS X.  It s
 
 ### Using Homebrew
 ```
-brew cask install bluetility
+brew install --cask bluetility
 ```
 
 ## Features

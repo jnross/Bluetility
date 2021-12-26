@@ -8,7 +8,7 @@
 
 import CoreBluetooth
 
-protocol DeviceDelegate: class {
+protocol DeviceDelegate: AnyObject {
     func deviceDidConnect(_ device: Device)
     func deviceDidDisconnect(_ device: Device)
     func deviceDidUpdateName(_ device: Device)

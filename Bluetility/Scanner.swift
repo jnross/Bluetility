@@ -8,7 +8,7 @@
 
 import CoreBluetooth;
 
-protocol ScannerDelegate: class {
+protocol ScannerDelegate: AnyObject {
     func scanner(_ scanner: Scanner, didUpdateDevices: [Device])
 }
 

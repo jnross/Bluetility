@@ -32,7 +32,7 @@ class LogViewController: NSViewController {
         let data = data ?? characteristic.value ?? Data()
         let hexString = data.hexString
         appendLogText("UUID \(characteristic.uuid.uuidString) \(operationType) Value: 0x\(hexString)")
-        let logEntry = LogEntry(serviceUUID: characteristic.service.uuid.uuidString,
+        let logEntry = LogEntry(serviceUUID: characteristic.service!.uuid.uuidString,
             charUUID: characteristic.uuid.uuidString,
             operation: operationType,
             data: hexString,

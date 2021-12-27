@@ -11,7 +11,6 @@ import Cocoa
 class BluetilityWindowController: NSWindowController {
 
     var viewController:ViewController?
-    @IBOutlet var statusLabel: NSTextField!
     @IBOutlet var refreshItem: NSToolbarItem!
     @IBOutlet var sortItem: NSToolbarItem!
     @IBOutlet var logItem: NSToolbarItem!
@@ -23,7 +22,6 @@ class BluetilityWindowController: NSWindowController {
     
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
         viewController = self.contentViewController as? ViewController
-        viewController?.statusLabel = statusLabel
         logItem.target = viewController
         sortItem.target = viewController
         refreshItem.target = viewController

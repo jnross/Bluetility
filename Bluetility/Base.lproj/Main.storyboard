@@ -249,23 +249,10 @@
                         <toolbar key="toolbar" implicitIdentifier="533C158D-7680-47F3-990F-C93EB5726D4D" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="Apq-FO-k1s">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="40F96AE3-F3F8-449C-AC48-175219A4BF4E" label="Refresh" paletteLabel="Refresh" tag="-1" image="Refresh" sizingBehavior="auto" id="kSv-rP-wzc"/>
-                                <toolbarItem implicitItemIdentifier="D4D8B06F-7D8C-404C-92C0-A86A5612CE41" label="" paletteLabel="Status" sizingBehavior="auto" id="en3-nR-uXY">
-                                    <nil key="toolTip"/>
-                                    <textField key="view" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QF6-8S-r4W">
-                                        <rect key="frame" x="19" y="14" width="4" height="16"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <textFieldCell key="cell" id="wjA-Zt-8V6">
-                                            <font key="font" metaFont="system"/>
-                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
-                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                        </textFieldCell>
-                                    </textField>
-                                </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="660AAC15-A283-4910-BA13-9D6F5BC92C9B" label="Sort" paletteLabel="Sort" tag="-1" image="SortBySignal" sizingBehavior="auto" id="kSU-oa-g28"/>
                                 <toolbarItem implicitItemIdentifier="2362131C-9542-43CD-AC53-E48E1171B9D0" label="Log" paletteLabel="Log" tag="-1" image="Logs" sizingBehavior="auto" id="K8I-0P-t4B" userLabel="Log"/>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
-                                <toolbarItem reference="en3-nR-uXY"/>
                                 <toolbarItem reference="kSv-rP-wzc"/>
                                 <toolbarItem reference="kSU-oa-g28"/>
                                 <toolbarItem reference="K8I-0P-t4B"/>
@@ -279,7 +266,6 @@
                         <outlet property="logItem" destination="K8I-0P-t4B" id="HfQ-HO-M2w"/>
                         <outlet property="refreshItem" destination="kSv-rP-wzc" id="Wcr-u6-W4G"/>
                         <outlet property="sortItem" destination="kSU-oa-g28" id="sEB-Qm-tuA"/>
-                        <outlet property="statusLabel" destination="QF6-8S-r4W" id="sQo-9S-cEh"/>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
                     </connections>
                 </windowController>
@@ -292,51 +278,68 @@
             <objects>
                 <viewController id="XfG-lQ-9wD" customClass="ViewController" customModule="Bluetility" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" id="m2S-Jp-Qdl">
-                        <rect key="frame" x="0.0" y="0.0" width="480" height="270"/>
+                        <rect key="frame" x="0.0" y="0.0" width="812" height="720"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <browser verticalHuggingPriority="750" allowsExpansionToolTips="YES" enabled="YES" hasHorizontalScroller="YES" allowsEmptySelection="YES" defaultColumnWidth="280" minColumnWidth="100" maxVisibleColumns="4" titled="YES" separatesColumns="YES" allowsTypeSelect="YES" columnResizingType="user" id="kaT-gA-YGL" customClass="PasteboardBrowser" customModule="Bluetility" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="480" height="272"/>
-                                <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                            <browser verticalHuggingPriority="750" allowsExpansionToolTips="YES" enabled="YES" hasHorizontalScroller="YES" allowsEmptySelection="YES" defaultColumnWidth="280" minColumnWidth="100" maxVisibleColumns="4" titled="YES" separatesColumns="YES" allowsTypeSelect="YES" columnResizingType="user" translatesAutoresizingMaskIntoConstraints="NO" id="kaT-gA-YGL" customClass="PasteboardBrowser" customModule="Bluetility" customModuleProvider="target">
+                                <rect key="frame" x="0.0" y="0.0" width="812" height="720"/>
                                 <connections>
                                     <action selector="browserAction:" target="XfG-lQ-9wD" id="r6B-Mu-1fT"/>
                                     <outlet property="delegate" destination="XfG-lQ-9wD" id="P1s-MW-ZXD"/>
                                 </connections>
                             </browser>
+                            <customView translatesAutoresizingMaskIntoConstraints="NO" id="7YK-3M-P0b">
+                                <rect key="frame" x="0.0" y="0.0" width="812" height="0.0"/>
+                                <subviews>
+                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0uW-yq-1vS">
+                                        <rect key="frame" x="404" y="0.0" width="4" height="0.0"/>
+                                        <textFieldCell key="cell" lineBreakMode="clipping" id="DES-la-NgJ">
+                                            <font key="font" usesAppearanceFont="YES"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="0uW-yq-1vS" firstAttribute="height" secondItem="7YK-3M-P0b" secondAttribute="height" priority="800" constant="-16" id="Hgx-1J-qlT"/>
+                                    <constraint firstAttribute="height" relation="lessThanOrEqual" id="OYB-72-kWN"/>
+                                    <constraint firstItem="0uW-yq-1vS" firstAttribute="centerY" secondItem="7YK-3M-P0b" secondAttribute="centerY" id="fb5-WO-wqz"/>
+                                    <constraint firstItem="0uW-yq-1vS" firstAttribute="centerX" secondItem="7YK-3M-P0b" secondAttribute="centerX" id="sxs-T9-bXy"/>
+                                </constraints>
+                            </customView>
                         </subviews>
+                        <constraints>
+                            <constraint firstAttribute="bottom" secondItem="7YK-3M-P0b" secondAttribute="bottom" id="7wn-c1-pdG"/>
+                            <constraint firstItem="kaT-gA-YGL" firstAttribute="top" secondItem="m2S-Jp-Qdl" secondAttribute="top" constant="22" symbolic="YES" id="IQQ-Tu-TRs"/>
+                            <constraint firstAttribute="trailing" secondItem="7YK-3M-P0b" secondAttribute="trailing" id="VWc-q7-LiM"/>
+                            <constraint firstAttribute="trailing" secondItem="kaT-gA-YGL" secondAttribute="trailing" id="XrJ-0u-2EQ"/>
+                            <constraint firstItem="7YK-3M-P0b" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="YJZ-64-nWq"/>
+                            <constraint firstItem="kaT-gA-YGL" firstAttribute="leading" secondItem="m2S-Jp-Qdl" secondAttribute="leading" id="gme-Ck-cAa"/>
+                            <constraint firstItem="7YK-3M-P0b" firstAttribute="top" secondItem="kaT-gA-YGL" secondAttribute="bottom" id="wm7-MA-IJY"/>
+                        </constraints>
                     </view>
                     <connections>
                         <outlet property="browser" destination="kaT-gA-YGL" id="ij5-hq-Nz3"/>
                         <outlet property="readButton" destination="fqL-z9-hpC" id="M3Z-ZV-7HF"/>
+                        <outlet property="statusBarHeightConstraint" destination="OYB-72-kWN" id="IZ3-f4-YzY"/>
+                        <outlet property="statusLabel" destination="0uW-yq-1vS" id="7dx-Wk-izR"/>
                         <outlet property="subscribeButton" destination="e59-Mo-I3N" id="ixE-ZD-QI8"/>
                         <outlet property="writeAscii" destination="ZXU-Fy-j1z" id="5eW-rb-K4M"/>
                         <outlet property="writeHex" destination="Wwy-M1-tko" id="nhr-gh-HOT"/>
                     </connections>
                 </viewController>
                 <customObject id="rPt-NT-nkU" userLabel="First Responder" customClass="NSResponder" sceneMemberID="firstResponder"/>
-                <button verticalHuggingPriority="750" id="e59-Mo-I3N">
-                    <rect key="frame" x="0.0" y="0.0" width="90" height="32"/>
+                <button verticalHuggingPriority="750" id="fqL-z9-hpC">
+                    <rect key="frame" x="0.0" y="0.0" width="82" height="32"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Subscribe" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WwL-A1-e6e">
+                    <buttonCell key="cell" type="push" title="Read" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dgx-ob-XKS">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="subscribeButtonPressed:" target="XfG-lQ-9wD" id="5IH-dk-4jO"/>
+                        <action selector="readButtonPressed:" target="XfG-lQ-9wD" id="b5b-Wx-aZR"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" id="ZXU-Fy-j1z">
-                    <rect key="frame" x="0.0" y="0.0" width="96" height="22"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="ASCII" drawsBackground="YES" id="j1z-Fr-ZPx">
-                        <font key="font" metaFont="system"/>
-                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
-                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                    </textFieldCell>
-                    <connections>
-                        <action selector="asciiEntered:" target="XfG-lQ-9wD" id="WJO-e9-6X7"/>
-                    </connections>
-                </textField>
                 <textField verticalHuggingPriority="750" id="Wwy-M1-tko">
                     <rect key="frame" x="0.0" y="0.0" width="96" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
@@ -349,19 +352,31 @@
                         <action selector="hexEntered:" target="XfG-lQ-9wD" id="oKB-b7-9gt"/>
                     </connections>
                 </textField>
-                <button verticalHuggingPriority="750" id="fqL-z9-hpC">
-                    <rect key="frame" x="0.0" y="0.0" width="82" height="32"/>
+                <textField verticalHuggingPriority="750" id="ZXU-Fy-j1z">
+                    <rect key="frame" x="0.0" y="0.0" width="96" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
-                    <buttonCell key="cell" type="push" title="Read" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="dgx-ob-XKS">
+                    <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="ASCII" drawsBackground="YES" id="j1z-Fr-ZPx">
+                        <font key="font" metaFont="system"/>
+                        <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                        <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                    </textFieldCell>
+                    <connections>
+                        <action selector="asciiEntered:" target="XfG-lQ-9wD" id="WJO-e9-6X7"/>
+                    </connections>
+                </textField>
+                <button verticalHuggingPriority="750" id="e59-Mo-I3N">
+                    <rect key="frame" x="0.0" y="0.0" width="90" height="32"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                    <buttonCell key="cell" type="push" title="Subscribe" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="WwL-A1-e6e">
                         <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                         <font key="font" metaFont="system"/>
                     </buttonCell>
                     <connections>
-                        <action selector="readButtonPressed:" target="XfG-lQ-9wD" id="b5b-Wx-aZR"/>
+                        <action selector="subscribeButtonPressed:" target="XfG-lQ-9wD" id="5IH-dk-4jO"/>
                     </connections>
                 </button>
             </objects>
-            <point key="canvasLocation" x="68" y="664"/>
+            <point key="canvasLocation" x="-50" y="1084"/>
         </scene>
         <!--Window Controller-->
         <scene sceneID="7iB-mi-oNm">

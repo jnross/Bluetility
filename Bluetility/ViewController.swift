@@ -24,8 +24,7 @@ class ViewController: NSViewController {
     @IBOutlet var writeHex:NSTextField!
     @IBOutlet var readButton:NSButton!
     @IBOutlet var subscribeButton:NSButton!
-    
-    var statusLabel:NSTextView = NSTextView()
+    @IBOutlet var statusLabel:NSTextField!
     
     var logWindowController:NSWindowController? = nil
     var logViewController:LogViewController? = nil
@@ -44,22 +43,6 @@ class ViewController: NSViewController {
     
     override func viewWillAppear() {
         super.viewWillAppear()
-        let refreshItem = self.view.window?.toolbar?.items[0]
-        refreshItem?.action = #selector(ViewController.refreshPressed(_:))
-        refreshItem?.target = self
-        let sortItem = self.view.window?.toolbar?.items[1]
-        sortItem?.action = #selector(ViewController.sortPressed(_:))
-        let logItem = self.view.window?.toolbar?.items[2]
-        logItem?.action = #selector(ViewController.logPressed(_:))
-        if let statusItem = self.view.window?.toolbar?.items[4] {
-            statusLabel.isEditable = false
-            statusLabel.backgroundColor = NSColor.clear
-            statusItem.view = statusLabel
-            var size = statusItem.maxSize
-            size.width = 150
-            statusItem.maxSize = size
-            statusLabel.frame = CGRect(x: 0,y: 0, width: size.width, height: size.height)
-        }
         
     }
     
@@ -230,7 +213,7 @@ extension ViewController : NSBrowserDelegate {
         if column == 1 {
             let device = scanner.devices[indexPath[0]]
             if device != selectedDevice {
-                statusLabel.string = ""
+                statusLabel.stringValue = ""
             }
             selectDevice(device)
             reloadColumn(1)
@@ -414,7 +397,7 @@ extension ViewController : NSBrowserDelegate {
     
     func updateStatusLabel(for device: Device) {
         if device == selectedDevice {
-            statusLabel.string = "\(device.friendlyName):\n \(device.peripheral.state == .connected ? "connected" : "disconnected")"
+            statusLabel.stringValue = "\(device.friendlyName): \(device.peripheral.state == .connected ? "connected" : "disconnected")"
         }
     }
 }

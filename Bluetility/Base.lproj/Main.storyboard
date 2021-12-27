@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="16096" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="16096"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -248,29 +248,27 @@
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <toolbar key="toolbar" implicitIdentifier="533C158D-7680-47F3-990F-C93EB5726D4D" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="Apq-FO-k1s">
                             <allowedToolbarItems>
-                                <toolbarItem implicitItemIdentifier="40F96AE3-F3F8-449C-AC48-175219A4BF4E" label="Refresh" paletteLabel="Refresh" tag="-1" image="Refresh" id="kSv-rP-wzc">
-                                    <connections>
-                                        <action selector="refreshPressed:" target="B8D-0N-5wS" id="bVn-H7-IV3"/>
-                                    </connections>
+                                <toolbarItem implicitItemIdentifier="40F96AE3-F3F8-449C-AC48-175219A4BF4E" label="Refresh" paletteLabel="Refresh" tag="-1" image="Refresh" sizingBehavior="auto" id="kSv-rP-wzc"/>
+                                <toolbarItem implicitItemIdentifier="D4D8B06F-7D8C-404C-92C0-A86A5612CE41" label="" paletteLabel="Status" sizingBehavior="auto" id="en3-nR-uXY">
+                                    <nil key="toolTip"/>
+                                    <textField key="view" verticalHuggingPriority="750" horizontalCompressionResistancePriority="250" textCompletion="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QF6-8S-r4W">
+                                        <rect key="frame" x="19" y="14" width="4" height="16"/>
+                                        <autoresizingMask key="autoresizingMask"/>
+                                        <textFieldCell key="cell" id="wjA-Zt-8V6">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </textFieldCell>
+                                    </textField>
                                 </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="NSToolbarShowColorsItem" id="Lgs-sQ-NN0"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarShowFontsItem" id="2Kg-m4-cr7"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarPrintItem" id="pCM-dq-JKL"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarSpaceItem" id="lwf-vr-SwG"/>
-                                <toolbarItem implicitItemIdentifier="NSToolbarFlexibleSpaceItem" id="3rr-ib-C5l"/>
-                                <toolbarItem implicitItemIdentifier="99DC67F5-2835-41E7-9030-F79FD68264F8" label="" paletteLabel="" tag="-1" id="uCq-Za-ArI">
-                                    <size key="minSize" width="150" height="0.0"/>
-                                    <size key="maxSize" width="150" height="0.0"/>
-                                </toolbarItem>
-                                <toolbarItem implicitItemIdentifier="660AAC15-A283-4910-BA13-9D6F5BC92C9B" label="Sort" paletteLabel="Sort" tag="-1" image="SortBySignal" id="kSU-oa-g28"/>
-                                <toolbarItem implicitItemIdentifier="2362131C-9542-43CD-AC53-E48E1171B9D0" label="Log" paletteLabel="Log" tag="-1" image="Logs" id="K8I-0P-t4B" userLabel="Log"/>
+                                <toolbarItem implicitItemIdentifier="660AAC15-A283-4910-BA13-9D6F5BC92C9B" label="Sort" paletteLabel="Sort" tag="-1" image="SortBySignal" sizingBehavior="auto" id="kSU-oa-g28"/>
+                                <toolbarItem implicitItemIdentifier="2362131C-9542-43CD-AC53-E48E1171B9D0" label="Log" paletteLabel="Log" tag="-1" image="Logs" sizingBehavior="auto" id="K8I-0P-t4B" userLabel="Log"/>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
+                                <toolbarItem reference="en3-nR-uXY"/>
                                 <toolbarItem reference="kSv-rP-wzc"/>
                                 <toolbarItem reference="kSU-oa-g28"/>
                                 <toolbarItem reference="K8I-0P-t4B"/>
-                                <toolbarItem reference="3rr-ib-C5l"/>
-                                <toolbarItem reference="uCq-Za-ArI"/>
                             </defaultToolbarItems>
                         </toolbar>
                         <connections>
@@ -278,6 +276,10 @@
                         </connections>
                     </window>
                     <connections>
+                        <outlet property="logItem" destination="K8I-0P-t4B" id="HfQ-HO-M2w"/>
+                        <outlet property="refreshItem" destination="kSv-rP-wzc" id="Wcr-u6-W4G"/>
+                        <outlet property="sortItem" destination="kSU-oa-g28" id="sEB-Qm-tuA"/>
+                        <outlet property="statusLabel" destination="QF6-8S-r4W" id="sQo-9S-cEh"/>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
                     </connections>
                 </windowController>
@@ -393,15 +395,15 @@
                             <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P7L-k4-bri">
                                 <rect key="frame" x="0.0" y="40" width="596" height="386"/>
                                 <clipView key="contentView" drawsBackground="NO" id="2Xa-dh-JJf">
-                                    <rect key="frame" x="1" y="1" width="594" height="384"/>
+                                    <rect key="frame" x="1" y="1" width="579" height="384"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="7yB-pE-MlB">
-                                            <rect key="frame" x="0.0" y="0.0" width="594" height="384"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="579" height="384"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="594" height="384"/>
+                                            <size key="minSize" width="579" height="384"/>
                                             <size key="maxSize" width="596" height="10000000"/>
                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         </textView>
@@ -412,15 +414,15 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="kj7-ZQ-T3n">
-                                    <rect key="frame" x="579" y="1" width="16" height="384"/>
+                                    <rect key="frame" x="580" y="1" width="15" height="384"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
                             <view translatesAutoresizingMaskIntoConstraints="NO" id="cGh-y9-3yU">
-                                <rect key="frame" x="196" y="0.0" width="205" height="40"/>
+                                <rect key="frame" x="204" y="0.0" width="189" height="40"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MGW-TM-pTE">
-                                        <rect key="frame" x="2" y="3" width="99" height="32"/>
+                                        <rect key="frame" x="1" y="3" width="93" height="32"/>
                                         <buttonCell key="cell" type="push" title="Save CSV" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LaJ-ps-CFx">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
@@ -430,7 +432,7 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C7q-vd-st2">
-                                        <rect key="frame" x="105" y="3" width="98" height="32"/>
+                                        <rect key="frame" x="96" y="3" width="92" height="32"/>
                                         <buttonCell key="cell" type="push" title="Clear Log" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oVm-Y4-6UC">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>

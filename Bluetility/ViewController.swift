@@ -435,7 +435,6 @@ extension ViewController: NSViewToolTipOwner {
     func tooltip(for device: Device) -> String {
         var tooltipParts:[String] = []
         tooltipParts.append("identifier:\t\t\(device.peripheral.identifier)")
-        tooltipParts.append("MAC:\t\t\(device.peripheral.macAddr ?? "-")")
         let advData = device.advertisingData
         tooltipParts.append(tooltipStringForAdvData(advData))
         return tooltipParts.joined(separator: "\n")
@@ -459,9 +458,6 @@ extension ViewController : PasteboardBrowserDelegate {
         menu.addItem(copyItem)
         
         if column == 0 {
-            if selectedDevice?.peripheral.macAddr != nil {
-                menu.addItem(NSMenuItem(title: "Copy MAC Address", action: #selector(copyDeviceMAC(sender:)), keyEquivalent: ""))
-            }
             menu.addItem(NSMenuItem(title: "Copy Device Identifier", action: #selector(copyDeviceIdentifier(sender:)), keyEquivalent: ""))
             menu.addItem(NSMenuItem(title: "Copy Device Tooltip", action: #selector(copyDeviceTooltip(sender:)), keyEquivalent: ""))
         } else if column == 1 {
@@ -478,13 +474,6 @@ extension ViewController : PasteboardBrowserDelegate {
         guard let cell = browser.selectedCell() as? NSBrowserCell else { return }
         
         putPasteboardString(cell.title)
-    }
-    
-    @IBAction
-    func copyDeviceMAC(sender: Any) {
-        guard let macAddressString = selectedDevice?.peripheral.macAddr else { return }
-        
-        putPasteboardString(macAddressString)
     }
     
     @IBAction

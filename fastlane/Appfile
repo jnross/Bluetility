@@ -4,3 +4,6 @@ apple_id("jnross@gmail.com") # Your Apple email address
 
 # For more information about the Appfile, see:
 #     https://docs.fastlane.tools/advanced/#appfile
+
+team_id "PTE4TYXPW2" # Developer Portal Team ID
+itc_team_id "128335516" # App Store Connect Team ID

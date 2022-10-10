@@ -219,7 +219,7 @@ extension ViewController : NSBrowserDelegate {
             selectDevice(device)
             reloadColumn(1)
         } else if column == 2 {
-            if let service = selectedDevice?.services[indexPath[1]] {
+            if let service = selectedDevice?.services[safe: indexPath[1]] {
                 selectedService = service
                 selectedDevice?.discoverCharacteristics(for: service)
                 selectedCharacteristic = nil

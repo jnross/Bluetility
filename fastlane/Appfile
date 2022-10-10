@@ -6,3 +6,4 @@ apple_id("jnross@gmail.com") # Your Apple email address
 #     https://docs.fastlane.tools/advanced/#appfile
 
 team_id "PTE4TYXPW2" # Developer Portal Team ID
+itc_team_id "PTE4TYXPW2" # Developer Portal Team ID

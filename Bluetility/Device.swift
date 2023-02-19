@@ -105,7 +105,7 @@ extension Device : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let error = error {
             // TODO: report an error?
-            assertionFailure(error.localizedDescription)
+            NSLog("Peripheral: \(peripheral) didDiscoverServices encountered error: \(error)")
         }
         let services = peripheral.services ?? []
         
@@ -117,7 +117,7 @@ extension Device : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let error = error {
             // TODO: report an error?
-            assertionFailure(error.localizedDescription)
+            NSLog("Peripheral: \(peripheral) didDiscoverCharacteristicsFor: \(service) encountered error: \(error)")
         }
         let characteristics = service.characteristics ?? []
         
@@ -129,7 +129,7 @@ extension Device : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
             // TODO: report an error?
-            assertionFailure(error.localizedDescription)
+            NSLog("Peripheral: \(peripheral) didUpdateValueFor: \(characteristic) encountered error: \(error)")
         }
         
         handleSpecialCharacteristic(characteristic)
@@ -139,9 +139,10 @@ extension Device : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
             // TODO: report an error?
-            assertionFailure(error.localizedDescription)
+            NSLog("Peripheral: \(peripheral) didWriteValueFor: \(characteristic) encountered error: \(error)")
         }
         // TODO: report successful write?
+        NSLog("Peripheral: \(peripheral) didWriteValueFor: \(characteristic) successfully")
     }
     
 }

@@ -7,6 +7,7 @@
 //
 
 import CoreBluetooth
+import Logging
 
 protocol DeviceDelegate: AnyObject {
     func deviceDidConnect(_ device: Device)
@@ -22,6 +23,7 @@ class Device : NSObject {
     unowned var scanner: Scanner
     var advertisingData: [String:Any]
     var rssi: Int
+    let logger = Logger(label: "com.rossible.Bluetility.Device")
     
     weak var delegate: DeviceDelegate? = nil
     
@@ -105,9 +107,12 @@ extension Device : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverServices error: Error?) {
         if let error = error {
             // TODO: report an error?
-            NSLog("Peripheral: \(peripheral) didDiscoverServices encountered error: \(error)")
+            logger.error("Peripheral: \(peripheral.name ?? "-") didDiscoverServices encountered error: \(error)")
+            return
         }
         let services = peripheral.services ?? []
+        
+        logger.info("Peripheral: \(peripheral.name ?? "-") didDiscoverServices: \(services.map({ $0.uuid }))")
         
         handleSpecialServices(services)
         
@@ -117,10 +122,12 @@ extension Device : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didDiscoverCharacteristicsFor service: CBService, error: Error?) {
         if let error = error {
             // TODO: report an error?
-            NSLog("Peripheral: \(peripheral) didDiscoverCharacteristicsFor: \(service) encountered error: \(error)")
+            logger.error("Peripheral: \(peripheral.name ?? "-") didDiscoverCharacteristicsFor: \(service) encountered error: \(error)")
+            return
         }
         let characteristics = service.characteristics ?? []
         
+        logger.info("Peripheral: \(peripheral.name ?? "-") didDiscoverCharacteristics: \(characteristics.map({ $0.uuid })) for: \(service.uuid) ")
         handleSpecialCharacteristics(characteristics)
         
         delegate?.device(self, updated: characteristics, for: service)
@@ -129,8 +136,10 @@ extension Device : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didUpdateValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
             // TODO: report an error?
-            NSLog("Peripheral: \(peripheral) didUpdateValueFor: \(characteristic) encountered error: \(error)")
+            logger.error("Peripheral: \(peripheral.name ?? "-") didUpdateValueFor: \(characteristic) encountered error: \(error)")
+            return
         }
+        logger.info("Peripheral: \(peripheral.name ?? "-") didUpdateValueFor: \(characteristic.uuid) to: \(characteristic.value?.hexString ?? "nil")")
         
         handleSpecialCharacteristic(characteristic)
         delegate?.device(self, updatedValueFor: characteristic)
@@ -139,10 +148,10 @@ extension Device : CBPeripheralDelegate {
     func peripheral(_ peripheral: CBPeripheral, didWriteValueFor characteristic: CBCharacteristic, error: Error?) {
         if let error = error {
             // TODO: report an error?
-            NSLog("Peripheral: \(peripheral) didWriteValueFor: \(characteristic) encountered error: \(error)")
+            logger.error("Peripheral: \(peripheral.name ?? "-") didWriteValueFor: \(characteristic) encountered error: \(error)")
         }
         // TODO: report successful write?
-        NSLog("Peripheral: \(peripheral) didWriteValueFor: \(characteristic) successfully")
+        logger.info("Peripheral: \(peripheral.name ?? "-") didWriteValueFor: \(characteristic) successfully")
     }
     
 }
@@ -190,6 +199,7 @@ extension Device {
                 modelName = String(bytes: value, encoding: .utf8)
             default:
                 assertionFailure("Forgot to handle one of the UUIDs in specialCharacteristicUUIDs: \(characteristic.uuid)")
+                logger.critical("Forgot to handle one of the UUIDs in specialCharacteristicUUIDs: \(characteristic.uuid)")
             }
             delegate?.deviceDidUpdateName(self)
         }

@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 46;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -17,6 +17,7 @@
 		3769BDE41C32FB0D004C089D /* LogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3769BDE31C32FB0D004C089D /* LogViewController.swift */; };
 		37F9CCD51C21D856003580CB /* PasteboardBrowser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 37F9CCD41C21D856003580CB /* PasteboardBrowser.swift */; };
 		505C6E80233FC8C400ABC0A3 /* NSTextField+Shake.swift in Sources */ = {isa = PBXBuildFile; fileRef = 505C6E7F233FC8C400ABC0A3 /* NSTextField+Shake.swift */; };
+		D89F265029A1B5DF00061958 /* Logging in Frameworks */ = {isa = PBXBuildFile; productRef = D89F264F29A1B5DF00061958 /* Logging */; };
 		D89F71D324ACF02800861217 /* Device.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89F71D224ACF02700861217 /* Device.swift */; };
 		D89F71D524ACF5F000861217 /* LogUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89F71D424ACF5F000861217 /* LogUtils.swift */; };
 		D89F71D724ACF67500861217 /* Swift+Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = D89F71D624ACF67500861217 /* Swift+Extensions.swift */; };
@@ -53,6 +54,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				D89F265029A1B5DF00061958 /* Logging in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -128,6 +130,9 @@
 			dependencies = (
 			);
 			name = Bluetility;
+			packageProductDependencies = (
+				D89F264F29A1B5DF00061958 /* Logging */,
+			);
 			productName = Bluetility;
 			productReference = 374931871BF169C90087E39F /* Bluetility.app */;
 			productType = "com.apple.product-type.application";
@@ -163,6 +168,9 @@
 				Base,
 			);
 			mainGroup = 3749317E1BF169C90087E39F;
+			packageReferences = (
+				D89F264E29A1B5DF00061958 /* XCRemoteSwiftPackageReference "swift-log" */,
+			);
 			productRefGroup = 374931881BF169C90087E39F /* Products */;
 			projectDirPath = "";
 			projectRoot = "";
@@ -271,6 +279,25 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		D89F264E29A1B5DF00061958 /* XCRemoteSwiftPackageReference "swift-log" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/apple/swift-log.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 1.0.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		D89F264F29A1B5DF00061958 /* Logging */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = D89F264E29A1B5DF00061958 /* XCRemoteSwiftPackageReference "swift-log" */;
+			productName = Logging;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 3749317F1BF169C90087E39F /* Project object */;
 }

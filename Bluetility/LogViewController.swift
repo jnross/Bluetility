@@ -13,7 +13,6 @@ class LogViewController: NSViewController {
     
     @IBOutlet var logText:NSTextView! = nil
     fileprivate var logEntries:[LogEntry] = []
-    var savePanel:NSSavePanel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,13 +51,13 @@ class LogViewController: NSViewController {
     }
     
     @IBAction func saveCSVPressed(_ sender:NSButton) {
-        savePanel = NSSavePanel()
+        let savePanel = NSSavePanel()
         savePanel.allowedFileTypes = ["csv"]
         //savePanel.nameFieldStringValue = "Save Logs as csv"
         savePanel.beginSheetModal(for: self.view.window!) { (result) -> Void in
             if result == NSApplication.ModalResponse.OK {
-                self.savePanel.orderOut(self)
-                if let selectedUrl = self.savePanel.url {
+                savePanel.orderOut(self)
+                if let selectedUrl = savePanel.url {
                     var contents:String = "service,characteristic,operation,data,timestamp\n"
                     let dateFormatter = DateFormatter()
                     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Logging
 
 @NSApplicationMain
 class AppDelegate: NSObject, NSApplicationDelegate {
@@ -17,6 +18,7 @@ class AppDelegate: NSObject, NSApplicationDelegate {
         // Insert code here to initialize your application
         let defaults = ["NSToolTipAutoWrappingDisabled" : NSNumber(value: true)]
         UserDefaults.standard.register(defaults: defaults)
+        LoggingSystem.bootstrap(LoggingOSLogHandler.init)
     }
 
     func applicationWillTerminate(_ aNotification: Notification) {

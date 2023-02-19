@@ -377,7 +377,6 @@ extension ViewController : NSBrowserDelegate {
     }
     
     func writeDataToSelectedCharacteristic(_ data:Data) {
-        log("writing data \(data)")
         if let characteristic = selectedCharacteristic {
             var writeType = CBCharacteristicWriteType.withResponse
             if (!characteristic.properties.contains(.write)) {

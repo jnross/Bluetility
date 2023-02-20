@@ -389,7 +389,6 @@ extension ViewController : NSBrowserDelegate {
             
             selectedDevice?.write(data: data, for: characteristic, type: writeType)
             
-            logViewController?.appendWrite(characteristic, data: data)
         }
     }
     
@@ -568,7 +567,6 @@ extension ViewController : DeviceDelegate {
     }
     
     func device(_ device: Device, updatedValueFor characteristic: CBCharacteristic) {
-        logViewController?.appendRead(characteristic)
         if characteristic == selectedCharacteristic {
             characteristicUpdatedDate = Date()
             refreshCharacteristicDetail()

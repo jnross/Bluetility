@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="19529" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="19529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -410,15 +410,15 @@
                             <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P7L-k4-bri">
                                 <rect key="frame" x="0.0" y="40" width="596" height="386"/>
                                 <clipView key="contentView" drawsBackground="NO" id="2Xa-dh-JJf">
-                                    <rect key="frame" x="1" y="1" width="579" height="384"/>
+                                    <rect key="frame" x="1" y="1" width="594" height="384"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="7yB-pE-MlB">
-                                            <rect key="frame" x="0.0" y="0.0" width="579" height="384"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="594" height="384"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="579" height="384"/>
+                                            <size key="minSize" width="594" height="384"/>
                                             <size key="maxSize" width="596" height="10000000"/>
                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         </textView>
@@ -429,16 +429,16 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="kj7-ZQ-T3n">
-                                    <rect key="frame" x="580" y="1" width="15" height="384"/>
+                                    <rect key="frame" x="579" y="1" width="16" height="384"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>
                             <view translatesAutoresizingMaskIntoConstraints="NO" id="cGh-y9-3yU">
-                                <rect key="frame" x="204" y="0.0" width="189" height="40"/>
+                                <rect key="frame" x="218" y="0.0" width="160" height="40"/>
                                 <subviews>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="MGW-TM-pTE">
-                                        <rect key="frame" x="1" y="3" width="93" height="32"/>
-                                        <buttonCell key="cell" type="push" title="Save CSV" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LaJ-ps-CFx">
+                                        <rect key="frame" x="1" y="3" width="64" height="32"/>
+                                        <buttonCell key="cell" type="push" title="Save" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="LaJ-ps-CFx">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>
                                         </buttonCell>
@@ -447,7 +447,7 @@
                                         </connections>
                                     </button>
                                     <button verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="C7q-vd-st2">
-                                        <rect key="frame" x="96" y="3" width="92" height="32"/>
+                                        <rect key="frame" x="67" y="3" width="92" height="32"/>
                                         <buttonCell key="cell" type="push" title="Clear Log" bezelStyle="rounded" alignment="center" borderStyle="border" imageScaling="proportionallyDown" inset="2" id="oVm-Y4-6UC">
                                             <behavior key="behavior" pushIn="YES" lightByBackground="YES" lightByGray="YES"/>
                                             <font key="font" metaFont="system"/>

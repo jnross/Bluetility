@@ -18,32 +18,10 @@ class LogViewController: NSViewController, LogRecorderDelegate {
         }
     }
     @IBOutlet var logText:NSTextView! = nil
-    fileprivate var logEntries:[LogEntry] = []
     
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do view setup here.
-    }
-    
-    func appendRead(_ characteristic:CBCharacteristic) {
-        appendCharacteristicOperation(characteristic, operationType: .Read)
-    }
-    
-    func appendWrite(_ characteristic:CBCharacteristic, data: Data) {
-        appendCharacteristicOperation(characteristic, operationType: .Write, data: data)
-    }
-    
-    fileprivate func appendCharacteristicOperation(_ characteristic:CBCharacteristic, operationType:OperationType, data: Data? = nil) {
-        let data = data ?? characteristic.value ?? Data()
-        let hexString = data.hexString
-        //appendLogText("UUID \(characteristic.uuid.uuidString) \(operationType) Value: 0x\(hexString)")
-        let logEntry = LogEntry(serviceUUID: characteristic.service!.uuid.uuidString,
-            charUUID: characteristic.uuid.uuidString,
-            operation: operationType,
-            data: hexString,
-            timestamp: Date()
-        )
-        logEntries.append(logEntry)
     }
     
     func appendLogText(_ message:String) {
@@ -52,26 +30,17 @@ class LogViewController: NSViewController, LogRecorderDelegate {
     }
     
     @IBAction func clearLogPressed(_ sender:NSButton) {
-        logText.string = ""
-        logEntries = []
         recorder?.reset()
     }
     
     @IBAction func saveCSVPressed(_ sender:NSButton) {
         let savePanel = NSSavePanel()
-        savePanel.allowedFileTypes = ["csv"]
-        //savePanel.nameFieldStringValue = "Save Logs as csv"
+        savePanel.allowedFileTypes = ["txt"]
         savePanel.beginSheetModal(for: self.view.window!) { (result) -> Void in
             if result == NSApplication.ModalResponse.OK {
                 savePanel.orderOut(self)
                 if let selectedUrl = savePanel.url {
-                    var contents:String = "service,characteristic,operation,data,timestamp\n"
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    for logEntry in self.logEntries {
-                        let timeString = dateFormatter.string(from: logEntry.timestamp)
-                        contents += "\(logEntry.serviceUUID),\(logEntry.charUUID),\(logEntry.operation),\(logEntry.data),\(timeString)\n"
-                    }
+                    let contents:String = self.logText.string
                     do {
                         try contents.write(to: selectedUrl, atomically: true, encoding: String.Encoding.utf8)
                     } catch {
@@ -91,16 +60,4 @@ class LogViewController: NSViewController, LogRecorderDelegate {
         logText.string = ""
     }
     
-}
-
-private enum OperationType : String {
-    case Read, Write
-}
-
-private struct LogEntry {
-    let serviceUUID:String
-    let charUUID:String
-    let operation:OperationType
-    let data:String
-    let timestamp:Date
 }

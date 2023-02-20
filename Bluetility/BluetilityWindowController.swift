@@ -7,6 +7,7 @@
 //
 
 import Cocoa
+import Logging
 
 class BluetilityWindowController: NSWindowController {
 
@@ -20,8 +21,14 @@ class BluetilityWindowController: NSWindowController {
         self.shouldCascadeWindows = false
         window?.setFrameAutosaveName("bluetility")
     
+        let recorder = LogRecorder()
+        LoggingSystem.bootstrap { label in
+            return BluetilityLogHandler(label: label, recorder: recorder)
+        }
+        
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
         viewController = self.contentViewController as? ViewController
+        viewController?.recorder = recorder
         logItem.target = viewController
         sortItem.target = viewController
         refreshItem.target = viewController

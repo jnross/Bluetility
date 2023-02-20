@@ -1,29 +1,30 @@
-//
-//  LoggingOSLogHandler.swift
-//  Bluetility
-//
-//  Created by Joseph Ross on 2/18/23.
-//  Copyright © 2023 Joseph Ross. All rights reserved.
-//
-
 import Foundation
 import Logging
 import struct Logging.Logger
 import os
 
-public struct LoggingOSLogHandler: LogHandler {
+public struct BluetilityLogHandler: LogHandler {
     public var logLevel: Logger.Level = .info
     public let label: String
     private let oslogger: OSLog
+    private let recorder: LogRecorder?
     
     public init(label: String) {
         self.label = label
         self.oslogger = OSLog(subsystem: label, category: "")
+        self.recorder = nil
+    }
+    
+    public init(label: String, recorder: LogRecorder) {
+        self.label = label
+        self.oslogger = OSLog(subsystem: label, category: "")
+        self.recorder = recorder
     }
 
-    public init(label: String, log: OSLog) {
+    public init(label: String, log: OSLog, recorder: LogRecorder) {
         self.label = label
         self.oslogger = log
+        self.recorder = recorder
     }
     
     public func log(level: Logger.Level, message: Logger.Message, metadata: Logger.Metadata?, file: String, function: String, line: UInt) {
@@ -41,6 +42,8 @@ public struct LoggingOSLogHandler: LogHandler {
             formedMessage += " -- " + combinedPrettyMetadata!
         }
         os_log("%{public}@", log: self.oslogger, type: OSLogType.from(loggerLevel: level), formedMessage as NSString)
+        
+        recorder?.append(message.description)
     }
     
     private var prettyMetadata: String?
@@ -95,4 +98,25 @@ extension OSLogType {
             return .fault
         }
     }
+}
+
+public class LogRecorder {
+    var lines: [String] = []
+    
+    var delegate: LogRecorderDelegate? = nil
+    
+    func append(_ line: String) {
+        lines.append(line)
+        delegate?.recorder(self, appendedLine: line)
+    }
+    
+    func reset() {
+        lines = []
+        delegate?.recorderDidReset(self)
+    }
+}
+
+public protocol LogRecorderDelegate: AnyObject {
+    func recorder(_ recorder: LogRecorder, appendedLine: String)
+    func recorderDidReset(_ recorder: LogRecorder)
 }

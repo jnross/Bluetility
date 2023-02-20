@@ -13,6 +13,8 @@ class ViewController: NSViewController {
     
     let scanner = Scanner()
     
+    var recorder: LogRecorder? = nil
+    
     var selectedDevice:Device? = nil
     var selectedService:CBService? = nil
     var selectedCharacteristic:CBCharacteristic? = nil
@@ -82,6 +84,7 @@ class ViewController: NSViewController {
                 logWindowController.showWindow(sender)
                 self.logWindowController = logWindowController
                 self.logViewController = logWindowController.contentViewController as? LogViewController
+                self.logViewController?.recorder = self.recorder
             }
         }
     }

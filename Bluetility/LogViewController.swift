@@ -9,8 +9,14 @@
 import Cocoa
 import CoreBluetooth
 
-class LogViewController: NSViewController {
+class LogViewController: NSViewController, LogRecorderDelegate {
     
+    var recorder: LogRecorder? = nil {
+        didSet {
+            recorder?.delegate = self
+            logText.string = recorder?.lines.joined(separator: "\n") ?? ""
+        }
+    }
     @IBOutlet var logText:NSTextView! = nil
     fileprivate var logEntries:[LogEntry] = []
     
@@ -30,7 +36,7 @@ class LogViewController: NSViewController {
     fileprivate func appendCharacteristicOperation(_ characteristic:CBCharacteristic, operationType:OperationType, data: Data? = nil) {
         let data = data ?? characteristic.value ?? Data()
         let hexString = data.hexString
-        appendLogText("UUID \(characteristic.uuid.uuidString) \(operationType) Value: 0x\(hexString)")
+        //appendLogText("UUID \(characteristic.uuid.uuidString) \(operationType) Value: 0x\(hexString)")
         let logEntry = LogEntry(serviceUUID: characteristic.service!.uuid.uuidString,
             charUUID: characteristic.uuid.uuidString,
             operation: operationType,
@@ -48,6 +54,7 @@ class LogViewController: NSViewController {
     @IBAction func clearLogPressed(_ sender:NSButton) {
         logText.string = ""
         logEntries = []
+        recorder?.reset()
     }
     
     @IBAction func saveCSVPressed(_ sender:NSButton) {
@@ -73,6 +80,15 @@ class LogViewController: NSViewController {
                 }
             }
         }
+    }
+    
+    
+    func recorder(_ recorder: LogRecorder, appendedLine: String) {
+        appendLogText(appendedLine)
+    }
+    
+    func recorderDidReset(_ recorder: LogRecorder) {
+        logText.string = ""
     }
     
 }

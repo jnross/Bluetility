@@ -248,11 +248,24 @@
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
                         <toolbar key="toolbar" implicitIdentifier="533C158D-7680-47F3-990F-C93EB5726D4D" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="Apq-FO-k1s">
                             <allowedToolbarItems>
+                                <toolbarItem implicitItemIdentifier="AF74279A-5C2D-4C8B-AF10-E4118D9C1B93" label="Search" paletteLabel="Search" sizingBehavior="auto" id="Lqj-o0-euH">
+                                    <nil key="toolTip"/>
+                                    <searchField key="view" wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" id="4TR-Xo-VuE">
+                                        <rect key="frame" x="0.0" y="14" width="96" height="22"/>
+                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="Identifier, Service UUID" usesSingleLineMode="YES" bezelStyle="round" id="mID-HJ-2yX">
+                                            <font key="font" metaFont="system"/>
+                                            <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
+                                            <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
+                                        </searchFieldCell>
+                                    </searchField>
+                                </toolbarItem>
                                 <toolbarItem implicitItemIdentifier="40F96AE3-F3F8-449C-AC48-175219A4BF4E" label="Refresh" paletteLabel="Refresh" tag="-1" image="Refresh" sizingBehavior="auto" id="kSv-rP-wzc"/>
                                 <toolbarItem implicitItemIdentifier="660AAC15-A283-4910-BA13-9D6F5BC92C9B" label="Sort" paletteLabel="Sort" tag="-1" image="SortBySignal" sizingBehavior="auto" id="kSU-oa-g28"/>
                                 <toolbarItem implicitItemIdentifier="2362131C-9542-43CD-AC53-E48E1171B9D0" label="Log" paletteLabel="Log" tag="-1" image="Logs" sizingBehavior="auto" id="K8I-0P-t4B" userLabel="Log"/>
                             </allowedToolbarItems>
                             <defaultToolbarItems>
+                                <toolbarItem reference="Lqj-o0-euH"/>
                                 <toolbarItem reference="kSv-rP-wzc"/>
                                 <toolbarItem reference="kSU-oa-g28"/>
                                 <toolbarItem reference="K8I-0P-t4B"/>
@@ -265,6 +278,7 @@
                     <connections>
                         <outlet property="logItem" destination="K8I-0P-t4B" id="HfQ-HO-M2w"/>
                         <outlet property="refreshItem" destination="kSv-rP-wzc" id="Wcr-u6-W4G"/>
+                        <outlet property="searchItemField" destination="4TR-Xo-VuE" id="3Ii-55-fuu"/>
                         <outlet property="sortItem" destination="kSU-oa-g28" id="sEB-Qm-tuA"/>
                         <segue destination="XfG-lQ-9wD" kind="relationship" relationship="window.shadowedContentViewController" id="cq2-FE-JQM"/>
                     </connections>

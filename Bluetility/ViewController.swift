@@ -20,6 +20,7 @@ class ViewController: NSViewController {
     var selectedCharacteristic:CBCharacteristic? = nil
     var characteristicUpdatedDate:Date? = nil
     let dateFormatter = DateFormatter()
+    var searchValue = ""
     
     @IBOutlet var browser:NSBrowser!
     @IBOutlet var writeAscii:NSTextField!
@@ -89,6 +90,11 @@ class ViewController: NSViewController {
         }
     }
     
+    func searchTextDidChange(value: String) {
+        searchValue = value.lowercased().trimmingCharacters(in: .whitespaces)
+        resetTooltips()
+    }
+    
     func resetTooltips() {
         browser.removeAllToolTips()
         rowForTooltipTag = [:]
@@ -97,9 +103,47 @@ class ViewController: NSViewController {
 }
 
 extension ViewController : NSBrowserDelegate {
+    func filterBySearch(_ device: Device) -> Bool {
+        if (
+            device.peripheral.identifier.uuidString.contains(searchValue) ||
+            device.friendlyName.lowercased().contains(searchValue)
+        ) {
+            return true
+        }
+
+        let advData = device.advertisingData
+        
+        if let serviceUUIDs = advData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID], containsInArrayOfCBUUIDs(searchFor: searchValue, inArray: serviceUUIDs){
+            return true
+        }
+        
+        if let serviceUUIDS = advData[CBAdvertisementDataOverflowServiceUUIDsKey] as? [CBUUID], containsInArrayOfCBUUIDs(searchFor: searchValue, inArray: serviceUUIDS) {
+            return true
+        }
+     
+        return false
+    }
+    
+    func containsInArrayOfCBUUIDs(searchFor: String, inArray: [CBUUID]) -> Bool {
+        let asString = inArray.map {$0.uuidString}
+        
+        return asString.contains(where: {
+            return $0.lowercased().contains(searchFor)
+        })
+    }
+  
+    
+    var visibleDevices: [Device] {
+        if (searchValue == "") {
+            return scanner.devices
+        }
+        
+        return scanner.devices.filter(filterBySearch)
+    }
+    
     func browser(_ sender: NSBrowser, numberOfRowsInColumn column: Int) -> Int {
         switch column {
-        case 0: return scanner.devices.count;
+        case 0: return visibleDevices.count
         case 1: return selectedDevice?.services.count ?? 0
         case 2: return selectedService?.characteristics?.count ?? 0
         case 3: return 4
@@ -115,7 +159,7 @@ extension ViewController : NSBrowserDelegate {
         guard let cell = cell as? NSBrowserCell else { return }
         switch column {
         case 0:
-            let device = scanner.devices[row]
+            let device = visibleDevices[row]
             cell.title = (device.friendlyName) + "(\(device.rssi))"
             let rect = browser.frame(ofRow: row, inColumn: column)
             if tooltipTagForRow[row] == nil {
@@ -215,7 +259,7 @@ extension ViewController : NSBrowserDelegate {
             reconnectPeripheral()
         }
         if column == 1 {
-            let device = scanner.devices[indexPath[0]]
+            let device = visibleDevices[indexPath[0]]
             if device != selectedDevice {
                updateStatusLabel(for: device)
             }
@@ -427,7 +471,7 @@ extension ViewController: NSViewToolTipOwner {
     
     func view(_ view: NSView, stringForToolTip tag: NSView.ToolTipTag, point: NSPoint, userData data: UnsafeMutableRawPointer?) -> String {
         if let row = rowForTooltipTag[tag] {
-            let device = scanner.devices[row]
+            let device = visibleDevices[row]
             return tooltip(for: device)
         }
         return ""
@@ -447,7 +491,7 @@ extension ViewController : PasteboardBrowserDelegate {
         if indexPath.count == 1 {
             let row = indexPath[0]
             guard let tag = tooltipTagForRow[row] else {return nil}
-            let peripheralName = scanner.devices[row].friendlyName
+            let peripheralName = visibleDevices[row].friendlyName
             return "Name:\t\t\t\(peripheralName)\n" + self.view(browser, stringForToolTip: tag, point: NSPoint(), userData: nil)
         }
         return nil
@@ -530,7 +574,7 @@ extension ViewController : DeviceDelegate {
     
     func deviceDidUpdateName(_ device: Device) {
         updateStatusLabel(for: device)
-        guard let deviceIndex = scanner.devices.firstIndex(of: device) else { return }
+        guard let deviceIndex = visibleDevices.firstIndex(of: device) else { return }
         browser.reloadData(forRowIndexes: IndexSet(integer: deviceIndex), inColumn: 0)
     }
     

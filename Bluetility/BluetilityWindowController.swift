@@ -15,6 +15,7 @@ class BluetilityWindowController: NSWindowController {
     @IBOutlet var refreshItem: NSToolbarItem!
     @IBOutlet var sortItem: NSToolbarItem!
     @IBOutlet var logItem: NSToolbarItem!
+    @IBOutlet var searchItemField: NSSearchField!
     
     override func windowDidLoad() {
         super.windowDidLoad()
@@ -35,6 +36,17 @@ class BluetilityWindowController: NSWindowController {
         logItem.action = #selector(ViewController.logPressed(_:))
         sortItem.action = #selector(ViewController.sortPressed(_:))
         refreshItem.action = #selector(ViewController.refreshPressed(_:))
-        
+        searchItemField.delegate = self
     }
 }
+
+extension BluetilityWindowController: NSSearchFieldDelegate {
+    func controlTextDidChange(_ obj: Notification) {
+        guard let searchField = obj.object as? NSSearchField, searchField == searchItemField else {
+            return
+        }
+        
+        viewController?.searchTextDidChange(value: searchField.stringValue)
+    }
+}
+

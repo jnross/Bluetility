@@ -6,7 +6,7 @@
 //  Copyright © 2015 Joseph Ross. All rights reserved.
 //
 
-import CoreBluetooth;
+import CoreBluetooth
 
 protocol ScannerDelegate: AnyObject {
     func scanner(_ scanner: Scanner, didUpdateDevices: [Device])

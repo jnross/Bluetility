@@ -40,10 +40,11 @@ class PasteboardBrowser: NSBrowser {
     }
     
     override func menu(for event: NSEvent) -> NSMenu? {
-        let point = event.locationInWindow
+        let windowPoint = event.locationInWindow
+        let viewPoint = self.convert(windowPoint, from: window?.contentView)
         var row: Int = 0
         var column: Int = 0
-        guard getRow(&row, column: &column, for: point) else { return nil }
+        guard getRow(&row, column: &column, for: viewPoint) else { return nil }
         selectRow(row, inColumn: column)
         self.sendAction()
         

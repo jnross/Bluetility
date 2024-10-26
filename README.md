@@ -35,3 +35,8 @@ Bluetility is inspired by [LightBlue](https://itunes.apple.com/us/app/lightblue/
 * Automatically reconnect to disconnected peripherals when needed
 
 Bluetility is published as open-source so that anyone can tweak or improve its functionality to meet their own needs.
+
+## Release Build
+
+1. Set notarization password as environment variable `FASTLANE_APPLE_APPLICATION_SPECIFIC_PASSWORD`
+2. Execute command ```bundle exec fastlane mac build_release``` 

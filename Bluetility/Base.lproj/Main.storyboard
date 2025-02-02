@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="21507" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
+<document type="com.apple.InterfaceBuilder3.Cocoa.Storyboard.XIB" version="3.0" toolsVersion="23504" targetRuntime="MacOSX.Cocoa" propertyAccessControl="none" useAutolayout="YES" initialViewController="B8D-0N-5wS">
     <dependencies>
         <deployment identifier="macosx"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="21507"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.CocoaPlugin" version="23504"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -246,13 +246,13 @@
                         <windowPositionMask key="initialPositionMask" leftStrut="YES" rightStrut="YES" topStrut="YES" bottomStrut="YES"/>
                         <rect key="contentRect" x="196" y="240" width="900" height="350"/>
                         <rect key="screenRect" x="0.0" y="0.0" width="1680" height="1027"/>
-                        <toolbar key="toolbar" implicitIdentifier="533C158D-7680-47F3-990F-C93EB5726D4D" autosavesConfiguration="NO" displayMode="iconAndLabel" sizeMode="regular" id="Apq-FO-k1s">
+                        <toolbar key="toolbar" implicitIdentifier="533C158D-7680-47F3-990F-C93EB5726D4D" autosavesConfiguration="NO" showsBaselineSeparator="NO" displayMode="iconAndLabel" sizeMode="regular" id="Apq-FO-k1s">
                             <allowedToolbarItems>
                                 <toolbarItem implicitItemIdentifier="AF74279A-5C2D-4C8B-AF10-E4118D9C1B93" label="Search" paletteLabel="Search" sizingBehavior="auto" id="Lqj-o0-euH">
                                     <nil key="toolTip"/>
-                                    <searchField key="view" wantsLayer="YES" verticalHuggingPriority="750" textCompletion="NO" id="4TR-Xo-VuE">
+                                    <searchField key="view" wantsLayer="YES" focusRingType="none" verticalHuggingPriority="750" textCompletion="NO" id="4TR-Xo-VuE">
                                         <rect key="frame" x="0.0" y="14" width="96" height="22"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
+                                        <autoresizingMask key="autoresizingMask"/>
                                         <searchFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" borderStyle="bezel" placeholderString="Identifier, Service UUID" usesSingleLineMode="YES" bezelStyle="round" id="mID-HJ-2yX">
                                             <font key="font" metaFont="system"/>
                                             <color key="textColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
@@ -296,17 +296,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <browser verticalHuggingPriority="750" allowsExpansionToolTips="YES" enabled="YES" hasHorizontalScroller="YES" allowsEmptySelection="YES" defaultColumnWidth="280" minColumnWidth="100" maxVisibleColumns="4" titled="YES" separatesColumns="YES" allowsTypeSelect="YES" columnResizingType="user" translatesAutoresizingMaskIntoConstraints="NO" id="kaT-gA-YGL" customClass="PasteboardBrowser" customModule="Bluetility" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="812" height="720"/>
+                                <rect key="frame" x="0.0" y="32" width="812" height="688"/>
                                 <connections>
                                     <action selector="browserAction:" target="XfG-lQ-9wD" id="r6B-Mu-1fT"/>
                                     <outlet property="delegate" destination="XfG-lQ-9wD" id="P1s-MW-ZXD"/>
                                 </connections>
                             </browser>
                             <customView translatesAutoresizingMaskIntoConstraints="NO" id="7YK-3M-P0b">
-                                <rect key="frame" x="0.0" y="0.0" width="812" height="0.0"/>
+                                <rect key="frame" x="0.0" y="0.0" width="812" height="32"/>
                                 <subviews>
-                                    <textField horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0uW-yq-1vS">
-                                        <rect key="frame" x="404" y="0.0" width="4" height="0.0"/>
+                                    <textField focusRingType="none" horizontalHuggingPriority="251" verticalHuggingPriority="750" translatesAutoresizingMaskIntoConstraints="NO" id="0uW-yq-1vS">
+                                        <rect key="frame" x="404" y="8" width="4" height="16"/>
                                         <textFieldCell key="cell" lineBreakMode="clipping" id="DES-la-NgJ">
                                             <font key="font" usesAppearanceFont="YES"/>
                                             <color key="textColor" name="labelColor" catalog="System" colorSpace="catalog"/>
@@ -316,7 +316,6 @@
                                 </subviews>
                                 <constraints>
                                     <constraint firstItem="0uW-yq-1vS" firstAttribute="height" secondItem="7YK-3M-P0b" secondAttribute="height" priority="800" constant="-16" id="Hgx-1J-qlT"/>
-                                    <constraint firstAttribute="height" relation="lessThanOrEqual" id="OYB-72-kWN"/>
                                     <constraint firstItem="0uW-yq-1vS" firstAttribute="centerY" secondItem="7YK-3M-P0b" secondAttribute="centerY" id="fb5-WO-wqz"/>
                                     <constraint firstItem="0uW-yq-1vS" firstAttribute="centerX" secondItem="7YK-3M-P0b" secondAttribute="centerX" id="sxs-T9-bXy"/>
                                 </constraints>
@@ -335,7 +334,6 @@
                     <connections>
                         <outlet property="browser" destination="kaT-gA-YGL" id="ij5-hq-Nz3"/>
                         <outlet property="readButton" destination="fqL-z9-hpC" id="M3Z-ZV-7HF"/>
-                        <outlet property="statusBarHeightConstraint" destination="OYB-72-kWN" id="IZ3-f4-YzY"/>
                         <outlet property="statusLabel" destination="0uW-yq-1vS" id="7dx-Wk-izR"/>
                         <outlet property="subscribeButton" destination="e59-Mo-I3N" id="ixE-ZD-QI8"/>
                         <outlet property="writeAscii" destination="ZXU-Fy-j1z" id="5eW-rb-K4M"/>
@@ -354,7 +352,7 @@
                         <action selector="readButtonPressed:" target="XfG-lQ-9wD" id="b5b-Wx-aZR"/>
                     </connections>
                 </button>
-                <textField verticalHuggingPriority="750" id="Wwy-M1-tko">
+                <textField focusRingType="none" verticalHuggingPriority="750" id="Wwy-M1-tko">
                     <rect key="frame" x="0.0" y="0.0" width="96" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="Write Hex" drawsBackground="YES" id="zYc-o7-b4q">
@@ -366,7 +364,7 @@
                         <action selector="hexEntered:" target="XfG-lQ-9wD" id="oKB-b7-9gt"/>
                     </connections>
                 </textField>
-                <textField verticalHuggingPriority="750" id="ZXU-Fy-j1z">
+                <textField focusRingType="none" verticalHuggingPriority="750" id="ZXU-Fy-j1z">
                     <rect key="frame" x="0.0" y="0.0" width="96" height="22"/>
                     <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMinY="YES"/>
                     <textFieldCell key="cell" scrollable="YES" lineBreakMode="clipping" selectable="YES" editable="YES" sendsActionOnEndEditing="YES" state="on" borderStyle="bezel" placeholderString="ASCII" drawsBackground="YES" id="j1z-Fr-ZPx">
@@ -424,15 +422,15 @@
                             <scrollView horizontalLineScroll="10" horizontalPageScroll="10" verticalLineScroll="10" verticalPageScroll="10" hasHorizontalScroller="NO" usesPredominantAxisScrolling="NO" translatesAutoresizingMaskIntoConstraints="NO" id="P7L-k4-bri">
                                 <rect key="frame" x="0.0" y="40" width="596" height="386"/>
                                 <clipView key="contentView" drawsBackground="NO" id="2Xa-dh-JJf">
-                                    <rect key="frame" x="1" y="1" width="594" height="384"/>
+                                    <rect key="frame" x="1" y="1" width="579" height="384"/>
                                     <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                     <subviews>
                                         <textView editable="NO" importsGraphics="NO" verticallyResizable="YES" usesFontPanel="YES" findStyle="panel" continuousSpellChecking="YES" allowsUndo="YES" usesRuler="YES" allowsNonContiguousLayout="YES" quoteSubstitution="YES" dashSubstitution="YES" smartInsertDelete="YES" id="7yB-pE-MlB">
-                                            <rect key="frame" x="0.0" y="0.0" width="594" height="384"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="579" height="384"/>
                                             <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                                             <color key="textColor" name="textColor" catalog="System" colorSpace="catalog"/>
                                             <color key="backgroundColor" name="textBackgroundColor" catalog="System" colorSpace="catalog"/>
-                                            <size key="minSize" width="594" height="384"/>
+                                            <size key="minSize" width="579" height="384"/>
                                             <size key="maxSize" width="596" height="10000000"/>
                                             <color key="insertionPointColor" name="controlTextColor" catalog="System" colorSpace="catalog"/>
                                         </textView>
@@ -443,7 +441,7 @@
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                                 <scroller key="verticalScroller" wantsLayer="YES" verticalHuggingPriority="750" horizontal="NO" id="kj7-ZQ-T3n">
-                                    <rect key="frame" x="579" y="1" width="16" height="384"/>
+                                    <rect key="frame" x="580" y="1" width="15" height="384"/>
                                     <autoresizingMask key="autoresizingMask"/>
                                 </scroller>
                             </scrollView>

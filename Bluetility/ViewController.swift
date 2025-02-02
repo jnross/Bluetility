@@ -28,7 +28,6 @@ class ViewController: NSViewController {
     @IBOutlet var readButton:NSButton!
     @IBOutlet var subscribeButton:NSButton!
     @IBOutlet var statusLabel:NSTextField!
-    @IBOutlet var statusBarHeightConstraint:NSLayoutConstraint!
     
     var logWindowController:NSWindowController? = nil
     var logViewController:LogViewController? = nil
@@ -444,25 +443,9 @@ extension ViewController : NSBrowserDelegate {
     func updateStatusLabel(for device: Device) {
         if device == selectedDevice {
             statusLabel.stringValue = "\(device.friendlyName): \(device.peripheral.state == .connected ? "connected" : "disconnected")"
-            
-            NSAnimationContext.runAnimationGroup({context in
-                context.duration = 0.25
-                context.allowsImplicitAnimation = true
                 
-                statusBarHeightConstraint.isActive = false
-                self.view.layoutSubtreeIfNeeded()
-              
-            }, completionHandler:nil)
         } else {
             statusLabel.stringValue = ""
-            NSAnimationContext.runAnimationGroup({context in
-                context.duration = 0.25
-                context.allowsImplicitAnimation = true
-                
-                statusBarHeightConstraint.isActive = true
-                self.view.layoutSubtreeIfNeeded()
-              
-            }, completionHandler:nil)
         }
     }
 }

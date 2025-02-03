@@ -183,35 +183,6 @@ extension ViewController : NSBrowserDelegate {
         }
     }
     
-    func tooltipStringForAdvData(_ advData:[String:Any]) -> String {
-        var tooltip = ""
-        if let mfgData = advData[CBAdvertisementDataManufacturerDataKey] as? Data {
-            tooltip += "Mfg Data:\t\t0x\(mfgData.hexString)\n"
-            if mfgData[0] == 0xd9 && mfgData[1] == 0x01 {
-                let uidData = mfgData[6..<14]
-                tooltip += "UID:\t\t\t\(uidData.hexString)\n"
-            }
-        }
-        if let localName = advData[CBAdvertisementDataLocalNameKey] as? String {
-            tooltip += "Local Name:\t\(localName)\n"
-        }
-        var allServiceUUIDs:[CBUUID] = []
-        if let serviceUUIDs = advData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
-            allServiceUUIDs += serviceUUIDs
-        }
-        if let serviceUUIDs = advData[CBAdvertisementDataOverflowServiceUUIDsKey] as? [CBUUID] {
-            allServiceUUIDs += serviceUUIDs
-        }
-        if allServiceUUIDs.count > 0 {
-            tooltip += "Service UUIDs:\t\(allServiceUUIDs.map({return $0.uuidString}).joined(separator: ", "))\n"
-        }
-        if let txPower = advData[CBAdvertisementDataTxPowerLevelKey] as? NSNumber {
-            tooltip += "Tx Power:\t\t\(txPower)\n"
-        }
-        tooltip = tooltip.trimmingCharacters(in: CharacterSet(charactersIn: "\n"))
-        return tooltip
-    }
-    
     func titleForUUID(_ uuid:CBUUID) -> String {
         var title = uuid.description
         if (title.hasPrefix("Unknown")) {
@@ -464,9 +435,32 @@ extension ViewController: NSViewToolTipOwner {
     
     func tooltip(for device: Device) -> String {
         var tooltipParts:[String] = []
+        tooltipParts.append("\t\(device.friendlyName)")
         tooltipParts.append("identifier:\t\t\(device.peripheral.identifier)")
-        let advData = device.advertisingData
-        tooltipParts.append(tooltipStringForAdvData(advData))
+        if let companyIdentifier = device.companyIdentifier {
+            tooltipParts.append("companyID:\t\(companyIdentifier)")
+        }
+        if let mfgData = device.advertisingData[CBAdvertisementDataManufacturerDataKey] as? Data {
+            tooltipParts.append("Mfg Data:\t\t0x\(mfgData.hexString)")
+            if mfgData[0] == 0xD9 && mfgData[1] == 0x01 {
+                let uidData = mfgData[6..<14]
+                tooltipParts.append("UID:\t\t\t\(uidData.hexString)")
+            }
+        }
+        var allServiceUUIDs:[CBUUID] = []
+        if let serviceUUIDs = device.advertisingData[CBAdvertisementDataServiceUUIDsKey] as? [CBUUID] {
+            allServiceUUIDs += serviceUUIDs
+        }
+        if let serviceUUIDs = device.advertisingData[CBAdvertisementDataOverflowServiceUUIDsKey] as? [CBUUID] {
+            allServiceUUIDs += serviceUUIDs
+        }
+        if allServiceUUIDs.count > 0 {
+            tooltipParts.append("Service UUIDs:\t\(allServiceUUIDs.map({return $0.uuidString}).joined(separator: ", "))")
+        }
+        if let txPower = device.advertisingData[CBAdvertisementDataTxPowerLevelKey] as? NSNumber {
+            tooltipParts.append("Tx Power:\t\t\(txPower)")
+        }
+        
         return tooltipParts.joined(separator: "\n")
     }
 }

@@ -20,6 +20,16 @@ extension Data {
     }
 }
 
+extension Array<UInt8> {
+    var hexString: String {
+        var hex:String = ""
+        for byte in self {
+            hex += String(format: "%02X", byte)
+        }
+        return hex
+    }
+}
+
 // MARK: Dictionary
 
 func += <KeyType, ValueType> (left: inout Dictionary<KeyType, ValueType>, right: Dictionary<KeyType, ValueType>) {

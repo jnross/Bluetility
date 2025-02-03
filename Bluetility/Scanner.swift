@@ -63,7 +63,7 @@ extension Scanner : CBCentralManagerDelegate {
         }
         
         existingDevice.rssi = RSSI.intValue
-        existingDevice.advertisingData += advertisementData
+        existingDevice.updateAdvertisingData(advertisementData)
         
         delegate?.scanner(self, didUpdateDevices: devices)
     }

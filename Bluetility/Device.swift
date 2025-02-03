@@ -30,6 +30,7 @@ class Device : NSObject {
     // Transient data
     var manufacturerName: String? = nil
     var modelName: String? = nil
+    var companyIdentifier: String? = nil
     
     init(scanner: Scanner, peripheral: CBPeripheral, advertisingData: [String: Any], rssi: Int) {
         self.scanner = scanner
@@ -39,11 +40,26 @@ class Device : NSObject {
         
         super.init()
         
+        extractCompanyIdentifier()
         peripheral.delegate = self
     }
     
     deinit {
         peripheral.delegate = nil
+    }
+    
+    func extractCompanyIdentifier() {
+        if let manufacturerData = self.advertisingData[CBAdvertisementDataManufacturerDataKey] as? Data {
+            if manufacturerData.count >= 2 {
+                let companyIdentifier = manufacturerData[0..<2].reversed().hexString
+                self.companyIdentifier = COMPANY_IDENTIFIERS[companyIdentifier] ?? companyIdentifier
+            }
+        }
+    }
+    
+    func updateAdvertisingData(_ newData:[String: Any]) {
+        self.advertisingData += newData
+        extractCompanyIdentifier()
     }
     
     var friendlyName : String {

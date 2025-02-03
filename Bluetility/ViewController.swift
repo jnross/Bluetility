@@ -8,31 +8,33 @@
 
 import Cocoa
 import CoreBluetooth
+import Logging
 
 class ViewController: NSViewController {
     
     let scanner = Scanner()
     
     var recorder: LogRecorder? = nil
+    let logger: Logger = Logger(label:"VC")
     
-    var selectedDevice:Device? = nil
-    var selectedService:CBService? = nil
-    var selectedCharacteristic:CBCharacteristic? = nil
-    var characteristicUpdatedDate:Date? = nil
+    var selectedDevice: Device? = nil
+    var selectedService: CBService? = nil
+    var selectedCharacteristic: CBCharacteristic? = nil
+    var characteristicUpdatedDate: Date? = nil
     let dateFormatter = DateFormatter()
     var searchValue = ""
     
-    @IBOutlet var browser:NSBrowser!
-    @IBOutlet var writeAscii:NSTextField!
-    @IBOutlet var writeHex:NSTextField!
-    @IBOutlet var readButton:NSButton!
-    @IBOutlet var subscribeButton:NSButton!
-    @IBOutlet var statusLabel:NSTextField!
+    @IBOutlet var browser: NSBrowser!
+    @IBOutlet var writeAscii: NSTextField!
+    @IBOutlet var writeHex: NSTextField!
+    @IBOutlet var readButton: NSButton!
+    @IBOutlet var subscribeButton: NSButton!
+    @IBOutlet var statusLabel: NSTextField!
     
-    var logWindowController:NSWindowController? = nil
-    var logViewController:LogViewController? = nil
-    var tooltipTagForRow:[Int:NSView.ToolTipTag] = [:]
-    var rowForTooltipTag:[NSView.ToolTipTag:Int] = [:]
+    var logWindowController: NSWindowController? = nil
+    var logViewController: LogViewController? = nil
+    var tooltipTagForRow: [Int:NSView.ToolTipTag] = [:]
+    var rowForTooltipTag: [NSView.ToolTipTag:Int] = [:]
     
 
     override func viewDidLoad() {

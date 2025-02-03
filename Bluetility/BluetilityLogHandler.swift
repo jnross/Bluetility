@@ -4,7 +4,8 @@ import struct Logging.Logger
 import os
 
 public struct BluetilityLogHandler: LogHandler {
-    public var logLevel: Logger.Level = .info
+    public var logLevel: Logger.Level = .debug
+    public var recordedLogLevel: Logger.Level = .info
     public let label: String
     private let oslogger: OSLog
     private let recorder: LogRecorder?
@@ -43,7 +44,9 @@ public struct BluetilityLogHandler: LogHandler {
         }
         os_log("%{public}@", log: self.oslogger, type: OSLogType.from(loggerLevel: level), formedMessage as NSString)
         
-        recorder?.append(message.description)
+        if level >= recordedLogLevel {
+            recorder?.append(message.description)
+        }
     }
     
     private var prettyMetadata: String?

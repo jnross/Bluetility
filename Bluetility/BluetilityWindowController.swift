@@ -11,21 +11,24 @@ import Logging
 
 class BluetilityWindowController: NSWindowController {
 
+    let recorder: LogRecorder = LogRecorder()
     var viewController:ViewController?
     @IBOutlet var refreshItem: NSToolbarItem!
     @IBOutlet var sortItem: NSToolbarItem!
     @IBOutlet var logItem: NSToolbarItem!
     @IBOutlet var searchItemField: NSSearchField!
     
+    required init?(coder: NSCoder) {
+        super.init(coder: coder)
+        LoggingSystem.bootstrap { label in
+            return BluetilityLogHandler(label: label, recorder: self.recorder)
+        }
+    }
+    
     override func windowDidLoad() {
         super.windowDidLoad()
         self.shouldCascadeWindows = false
         window?.setFrameAutosaveName("bluetility")
-    
-        let recorder = LogRecorder()
-        LoggingSystem.bootstrap { label in
-            return BluetilityLogHandler(label: label, recorder: recorder)
-        }
         
         // Implement this method to handle any initialization after your window controller's window has been loaded from its nib file.
         viewController = self.contentViewController as? ViewController

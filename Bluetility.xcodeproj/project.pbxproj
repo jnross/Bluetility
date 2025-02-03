@@ -3,7 +3,7 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 52;
+	objectVersion = 54;
 	objects = {
 
 /* Begin PBXBuildFile section */
@@ -243,6 +243,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D85908F22427E34700CBECC9 /* Debug.xcconfig */;
 			buildSettings = {
+				CURRENT_PROJECT_VERSION = 10;
+				MARKETING_VERSION = 1.5.2;
 			};
 			name = Debug;
 		};
@@ -250,6 +252,8 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D85908F32427E34700CBECC9 /* Release.xcconfig */;
 			buildSettings = {
+				CURRENT_PROJECT_VERSION = 10;
+				MARKETING_VERSION = 1.5.2;
 			};
 			name = Release;
 		};

@@ -31,6 +31,7 @@ class Device : NSObject {
     var manufacturerName: String? = nil
     var modelName: String? = nil
     var companyIdentifier: String? = nil
+    var company: String? = nil
     
     init(scanner: Scanner, peripheral: CBPeripheral, advertisingData: [String: Any], rssi: Int) {
         self.scanner = scanner
@@ -52,7 +53,8 @@ class Device : NSObject {
         if let manufacturerData = self.advertisingData[CBAdvertisementDataManufacturerDataKey] as? Data {
             if manufacturerData.count >= 2 {
                 let companyIdentifier = manufacturerData[0..<2].reversed().hexString
-                self.companyIdentifier = COMPANY_IDENTIFIERS[companyIdentifier] ?? companyIdentifier
+                self.companyIdentifier = companyIdentifier
+                self.company = COMPANY_IDENTIFIERS[companyIdentifier]
             }
         }
     }

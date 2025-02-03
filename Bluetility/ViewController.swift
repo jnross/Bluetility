@@ -105,10 +105,12 @@ class ViewController: NSViewController {
 
 extension ViewController : NSBrowserDelegate {
     func filterBySearch(_ device: Device) -> Bool {
-        if (
-            device.peripheral.identifier.uuidString.contains(searchValue) ||
-            device.friendlyName.lowercased().contains(searchValue)
-        ) {
+        if     device.peripheral.identifier.uuidString.contains(searchValue)
+            || device.friendlyName.lowercased().contains(searchValue)
+            || device.companyIdentifier?.lowercased().contains(searchValue) ?? false
+            || device.company?.lowercased().contains(searchValue) ?? false
+        
+        {
             return true
         }
 
@@ -437,7 +439,10 @@ extension ViewController: NSViewToolTipOwner {
         var tooltipParts:[String] = []
         tooltipParts.append("\t\(device.friendlyName)")
         tooltipParts.append("identifier:\t\t\(device.peripheral.identifier)")
-        if let companyIdentifier = device.companyIdentifier {
+        if let company = device.company {
+            tooltipParts.append("company:\t\t\(company)")
+        }
+        else if let companyIdentifier = device.companyIdentifier {
             tooltipParts.append("companyID:\t\(companyIdentifier)")
         }
         if let mfgData = device.advertisingData[CBAdvertisementDataManufacturerDataKey] as? Data {

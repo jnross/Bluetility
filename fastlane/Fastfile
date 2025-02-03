@@ -28,6 +28,7 @@ platform :mac do
           package: app_path,
           try_early_stapling: true,
           verbose: true,
+          api_key_path: ENV['API_KEY_PATH'],
         )
     end
 end

@@ -247,7 +247,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D85908F22427E34700CBECC9 /* Debug.xcconfig */;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				MARKETING_VERSION = 1.6.0;
 			};
 			name = Debug;
@@ -256,7 +256,7 @@
 			isa = XCBuildConfiguration;
 			baseConfigurationReference = D85908F32427E34700CBECC9 /* Release.xcconfig */;
 			buildSettings = {
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				MARKETING_VERSION = 1.6.0;
 			};
 			name = Release;
